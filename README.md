@@ -92,7 +92,7 @@ clickViewType取值说明：
 
 *代码示例：*
 
-android版，[安卓自定义项说明](https://support.dun.163.com/documents/287305921855672320?docId=424017619994976256)
+android版，[安卓自定义项说明](https://support.dun.163.com/documents/287305921855672320?docId=424017619994976256) 图标放置在react_native对应android工程的drawable下面 配置文件中只配置名字
 
 ```js
   const config = {
@@ -193,7 +193,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
           "text": "",              // 组件文案
           "font": 16,              // 组件字体
           "positionType": 1,       // 被添加组件的位置类型，1表示位于导航栏下方的body部分
-          "backgroundImgPath": "static/yidun_logo.png"   // 组件的背景图片路径
+          "backgroundImgPath": "yidun_logo.png"   // 组件的背景图片路径
       },
       {
           "viewId": "view_tips",
@@ -220,7 +220,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
           "width": 32,
           "height": 32,
           "clickable": true,
-        "backgroundImgPath": "static/weixin.png"
+        "backgroundImgPath": "weixin.png"
       },
       {
           "viewId": "qq_button",
@@ -233,7 +233,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
           "width": 32,
           "height": 32,
           "clickable": true,
-        "backgroundImgPath": "static/qq.png"
+        "backgroundImgPath": "qq.png"
       },
       {
           "viewId": "wb_button",
@@ -246,7 +246,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
           "width": 32,
           "height": 32,
           "clickable": true,
-        "backgroundImgPath": "static/weibo.png"
+        "backgroundImgPath": "weibo.png"
       }
     ]
 }
