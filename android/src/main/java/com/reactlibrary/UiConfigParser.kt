@@ -486,13 +486,14 @@ object UiConfigParser {
     }
 
     private fun getDrawable(resPath: String?, context: Context): Drawable? {
-        var drawable: BitmapDrawable? = null
-        var bitmap: Bitmap? = null
+        var drawable: Drawable? = null
+        var rid = 0
         try {
-            val assetManager = context.assets
-            val inputStream = resPath?.let { assetManager.open(it) }
-            bitmap = BitmapFactory.decodeStream(inputStream)
-            drawable = BitmapDrawable(context.resources, bitmap)
+            Log.d(TAG, "drawable path: $resPath")
+            if(!TextUtils.isEmpty(resPath)){
+                rid = context.resources.getIdentifier(resPath,"drawable",context.packageName)
+                drawable = context.resources.getDrawable(rid)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
