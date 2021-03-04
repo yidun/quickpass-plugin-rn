@@ -1,10 +1,10 @@
 
 Pod::Spec.new do |s|
-  s.name         = "QuickloginPlugin"
+  s.name         = "RNQuickloginPlugin"
   s.version      = "1.0.0"
-  s.summary      = "QuickloginPlugin"
+  s.summary      = "RNQuickloginPlugin"
   s.description  = <<-DESC
-                  QuickloginPlugin
+                  RNQuickloginPlugin
                    DESC
   s.homepage     = ""
   s.license      = "MIT"
