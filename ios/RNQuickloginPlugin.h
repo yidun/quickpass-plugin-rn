@@ -5,7 +5,10 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface RNQuickloginPlugin : NSObject <RCTBridgeModule>
+#import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
+
+@interface RNQuickloginPlugin : RCTEventEmitter <RCTBridgeModule>
 
 @end
   
