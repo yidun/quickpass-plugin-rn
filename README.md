@@ -2,8 +2,10 @@
 在使用前请确保已申请到易盾一键登录的业务id
 
 ## 导入插件
+```
 npm install --save https://github.com/yidun/quickpass-react-native.git
 react-native link react-native-quicklogin-plugin
+```
 
 ## 引入
 ```js
