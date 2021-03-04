@@ -1,12 +1,16 @@
 # 易盾一键登录RN接入使用文档
 在使用前请确保已申请到易盾一键登录的业务id
 
+## 导入插件
+npm install --save https://github.com/yidun/quickpass-react-native.git
+react-native link react-native-quicklogin-plugin
+
 ## 引入
 ```js
 import {NativeModules} from 'react-native';
 ```
 
-然后就可以使用原生模块NativeModules获取易盾一键登录RN对象NativeModules.NTESRNRouter
+然后就可以使用原生模块NativeModules获取易盾一键登录RN对象NativeModules.QuickLoginPlugin
 
 ## 一键登录API说明
 
@@ -25,7 +29,7 @@ success: 初始化是否成功
 ```
 *代码示例：*
 ```js
-NativeModules.NTESRNRouter.initQuickLogin('此处填写您申请的业务id');
+NativeModules.QuickLoginPlugin.initQuickLogin('此处填写您申请的业务id');
 ```
 
 ### setUiConfig(config, callback)
@@ -38,7 +42,7 @@ config -- 自定义配置项，iOS参见，android参见[易盾android接入文�
 callback -- 授权页事件回调（含生命周期钩子）
 
 ```js
-const NTESRNRouterEmitter = new  NativeEventEmitter(NativeModules.NTESRNRouter)
+const NTESRNRouterEmitter = new  NativeEventEmitter(NativeModules.QuickLoginPlugin)
 NTESRNRouterEmitter.addListener('uiCallback',(value)=>{
        console.log(value)
 });
@@ -129,7 +133,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
     "privacyDpSize": 12, // 设置隐私栏区域字体大小，单位dp
     "privacyTopYOffset": 0, // 设置隐私栏顶部Y轴偏移，单位dp
     "privacyBottomYOffset": 50, // 设置隐私栏距离屏幕底部偏移，单位dp
-    "privacyXOffset": 0, // 设置隐私栏水平方向的偏移，单位dp
+    "privacyMarginLeft": 0, // 设置隐私栏水平方向的偏移，单位dp
     "privacyMarginRight": 1, // 设置隐私栏右侧边距，单位dp
     "privacyState": true, // 设置隐私栏协议复选框勾选状态，true勾选，false不勾选
     "isHidePrivacySmh": false,
@@ -390,7 +394,7 @@ iOS版本，[iOS自定义项说明](https://support.dun.163.com/documents/287305
 
 ```
 ```js
-NativeModules.NTESRNRouter.setUiConfig(config,(value)=>{
+NativeModules.QuickLoginPlugin.setUiConfig(config,(value)=>{
        console.log(value)
 });
 ```
@@ -418,7 +422,7 @@ NativeModules.NTESRNRouter.setUiConfig(config,(value)=>{
 *代码示例：*
 
 ```js
-NativeModules.NTESRNRouter.prefetchNumber((success, resultDic) => {
+NativeModules.QuickLoginPlugin.prefetchNumber((success, resultDic) => {
     if (success) {
         // TODO: 预取号成功处理，可以进行调起授权页
     }else{
@@ -449,7 +453,7 @@ NativeModules.NTESRNRouter.prefetchNumber((success, resultDic) => {
 
 *代码示例：*
 ```js
-NativeModules.NTESRNRouter.login((success, resultDic)=>{
+NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
     console.log(resultDic)
     if (success) {
         // TODO: 授权成功处理，可以进行关闭授权页、服务端验证等
@@ -465,5 +469,5 @@ NativeModules.NTESRNRouter.login((success, resultDic)=>{
 
 *示例代码：*
 ```js
-NativeModules.NTESRNRouter.closeAuthController()
+NativeModules.QuickLoginPlugin.closeAuthController()
 ```
