@@ -1,8 +1,6 @@
 
 #import "RNQuickloginPlugin.h"
 #import <NTESQuickPass/NTESQuickPass.h>
-#import "UIColor+NTESQuickPass.h"
-#import "UIImage+KKImage.h"
 
 @interface RNQuickloginPlugin () <NTESQuickLoginManagerDelegate>
 
@@ -42,7 +40,7 @@ RCT_EXPORT_METHOD(closeAuthController)
 {
    dispatch_async(dispatch_get_main_queue(), ^(){
      [[NTESQuickLoginManager sharedInstance] closeAuthController:^{
-       
+
      }];
    });
 }
@@ -65,7 +63,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                   int cornerRadius = [[widgetsDict objectForKey:@"cornerRadius"] intValue];
                   NSDictionary *frame = [widgetsDict objectForKey:@"frame"];
                   NSString *image = [widgetsDict objectForKey:@"image"];
-                  
+
                   int x = 0;
                   int y = 0;
                   int width = [[frame objectForKey:@"width"] intValue];
@@ -80,7 +78,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                       int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
                       x = [UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width;
                   }
-                  
+
                   if ([frame objectForKey:@"mainScreenTopDistance"]) {
                       y = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
                   }
@@ -88,7 +86,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                       int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
                       y = [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance - height;
                   }
-                  
+
                   Class class = NSClassFromString(type);
                   UIButton *button = (UIButton *)[[class alloc] init];
                   [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
@@ -96,7 +94,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                   button.tag = i;
                   button.frame = CGRectMake(x, y, width, height);
                   [button setTitle:title forState:UIControlStateNormal];
-                  [button setTitleColor:[UIColor ntes_colorWithHexString:titleColor] forState:UIControlStateNormal];
+                  [button setTitleColor:[self ntes_colorWithHexString:titleColor] forState:UIControlStateNormal];
                   button.titleLabel.font = [UIFont systemFontOfSize:titleFont];
                   button.layer.cornerRadius = cornerRadius;
                   button.layer.masksToBounds = YES;
@@ -109,7 +107,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                   int font = [[widgetsDict objectForKey:@"font"] intValue];
                   int textAlignment = [[widgetsDict objectForKey:@"textAlignment"] intValue];
                   NSDictionary *frame = [widgetsDict objectForKey:@"frame"];
-                  
+
                   int x = 0;
                   int y = 0;
                   int width = [[frame objectForKey:@"width"] intValue];
@@ -124,7 +122,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                       int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
                       x = [UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width;
                   }
-                              
+
                   if ([frame objectForKey:@"mainScreenTopDistance"]) {
                       y = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
                   }
@@ -132,7 +130,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                       int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
                       y = [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance - height;
                   }
-                    
+
                   Class class = NSClassFromString(type);
                   UILabel *label = (UILabel *)[[class alloc] init];
                   label.tag = i;
@@ -140,7 +138,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
                   [label addGestureRecognizer:tap];
                   label.userInteractionEnabled = YES;
                   label.text = text;
-                  label.textColor = [UIColor ntes_colorWithHexString:textColor];
+                  label.textColor = [self ntes_colorWithHexString:textColor];
                   label.font = [UIFont systemFontOfSize:font];
                   label.textAlignment = textAlignment;
                   label.frame = CGRectMake(x, y, width, height);
@@ -149,27 +147,27 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
               }
           }
       };
-      
-      customModel.backgroundColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"backgroundColor"]];
+
+      customModel.backgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"backgroundColor"]];
       customModel.bgImage = [UIImage imageNamed:[dict objectForKey:@"bgImage"]];
       customModel.navTextFont = [UIFont systemFontOfSize:[[dict objectForKey:@"navTextFont"] intValue]];
       customModel.navText = [dict objectForKey:@"navText"];
-      customModel.navTextColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"navTextColor"]];
-      customModel.navBgColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"navBgColor"]];
+      customModel.navTextColor = [self ntes_colorWithHexString:[dict objectForKey:@"navTextColor"]];
+      customModel.navBgColor = [self ntes_colorWithHexString:[dict objectForKey:@"navBgColor"]];
       customModel.navTextHidden = [[dict objectForKey:@"navTextHidden"] boolValue];
     customModel.logoImg = [UIImage imageNamed:[dict objectForKey:@"logoIconName"]];
-      customModel.numberColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"numberColor"]];
+      customModel.numberColor = [self ntes_colorWithHexString:[dict objectForKey:@"numberColor"]];
       customModel.numberFont = [UIFont systemFontOfSize:[[dict objectForKey:@"numberFont"] intValue]];
-      customModel.brandColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"brandColor"]];
+      customModel.brandColor = [self ntes_colorWithHexString:[dict objectForKey:@"brandColor"]];
       customModel.brandFont = [UIFont systemFontOfSize:[[dict objectForKey:@"brandFont"] intValue]];
       customModel.brandHidden = [[dict objectForKey:@"brandHidden"] boolValue];
       customModel.brandHeight = [[dict objectForKey:@"brandHeight"] intValue];
       customModel.logBtnTextFont = [UIFont systemFontOfSize:[[dict objectForKey:@"loginBtnTextSize"] intValue]];
       customModel.logBtnText = [dict objectForKey:@"logBtnText"];
-      customModel.logBtnTextColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"logBtnTextColor"]];
-      customModel.logBtnUsableBGColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"logBtnUsableBGColor"]];
+      customModel.logBtnTextColor = [self ntes_colorWithHexString:[dict objectForKey:@"logBtnTextColor"]];
+      customModel.logBtnUsableBGColor = [self ntes_colorWithHexString:[dict objectForKey:@"logBtnUsableBGColor"]];
     customModel.closePopImg = [UIImage imageNamed:[dict objectForKey:@"closePopImg"]];
-      customModel.numberBackgroundColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"numberBackgroundColor"]];
+      customModel.numberBackgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"numberBackgroundColor"]];
       customModel.numberHeight = [[dict objectForKey:@"numberHeight"] intValue];
       customModel.numberCornerRadius = [[dict objectForKey:@"numberCornerRadius"] intValue];
       customModel.numberLeftContent = [dict objectForKey:@"numberLeftContent"];
@@ -185,14 +183,14 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
           customModel.prograssHUDBlock = ^(UIView * _Nullable prograssHUDBlock) {
           };
       }
-        
+
       int loadingViewBlock = [[dict objectForKey:@"loadingViewBlock"] intValue];
       if (loadingViewBlock) {
           customModel.loadingViewBlock = ^(UIView * _Nullable customLoadingView) {
-                
+
           };
       }
-        
+
         customModel.appPrivacyText = [dict objectForKey:@"appPrivacyText"];
         customModel.appFPrivacyText = [dict objectForKey:@"appFPrivacyText"];
         customModel.appFPrivacyURL = [dict objectForKey:@"appFPrivacyURL"];
@@ -201,7 +199,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
         customModel.appPrivacyOriginLeftMargin = [[dict objectForKey:@"appPrivacyOriginLeftMargin"] doubleValue];
         customModel.appPrivacyOriginRightMargin = [[dict objectForKey:@"appPrivacyOriginRightMargin"] doubleValue];
           customModel.appPrivacyOriginBottomMargin = [[dict objectForKey:@"appPrivacyOriginBottomMargin"] doubleValue];
-        
+
         customModel.appFPrivacyTitleText = [dict objectForKey:@"appFPrivacyTitleText"];
         customModel.appPrivacyTitleText = [dict objectForKey:@"appPrivacyTitleText"];
         customModel.appSPrivacyTitleText = [dict objectForKey:@"appSPrivacyTitleText"];
@@ -223,19 +221,19 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
   //      customModel.uncheckedImg =  [UIImage imageWithName:@"unCheckedImageName" class:[self class]];
         customModel.logBtnOriginRight = [[dict objectForKey:@"logBtnOriginRight"] intValue];
         customModel.logBtnOriginLeft = [[dict objectForKey:@"logBtnOriginLeft"] intValue];
-        
-        
+
+
         customModel.logoOffsetTopY = [[dict objectForKey:@"logoOffsetTopY"] doubleValue];
         customModel.logoOffsetX = [[dict objectForKey:@"logoOffsetX"] doubleValue];
         customModel.logBtnRadius = [[dict objectForKey:@"logBtnRadius"] intValue];
         customModel.logoWidth = [[dict objectForKey:@"logoWidth"] intValue];
-        
+
         customModel.logoOffsetTopY = [[dict objectForKey:@"logoOffsetTopY"] doubleValue];
         customModel.logoOffsetX = [[dict objectForKey:@"logoOffsetX"] doubleValue];
-        customModel.brandBackgroundColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"brandBackgroundColor"]];
-        customModel.privacyColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"privacyColor"]];
-        customModel.protocolColor = [UIColor ntes_colorWithHexString:[dict objectForKey:@"protocolColor"]];
-        
+        customModel.brandBackgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"brandBackgroundColor"]];
+        customModel.privacyColor = [self ntes_colorWithHexString:[dict objectForKey:@"privacyColor"]];
+        customModel.protocolColor = [self ntes_colorWithHexString:[dict objectForKey:@"protocolColor"]];
+
         customModel.privacyNavReturnImg = [UIImage imageNamed:@"privacyNavReturnImg"];
         customModel.navReturnImgHeight = [[dict objectForKey:@"navReturnImgHeight"] intValue];
         customModel.navReturnImgLeftMargin = [[dict objectForKey:@"navReturnImgLeftMargin"] intValue];
@@ -253,13 +251,13 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
         } else {
             customModel.shouldHiddenPrivacyMarks = NO;
         }
-        
+
         int navControl = [[dict objectForKey:@"navControl"] intValue];
         int navControlRightMargin = [[dict objectForKey:@"navControlRightMargin"] intValue];
         int navControlBottomMargin = [[dict objectForKey:@"navControlBottomMargin"] intValue];
         int navControlWidth = [[dict objectForKey:@"navControlWidth"] intValue];
         int navControlHeight = [[dict objectForKey:@"navControlHeight"] intValue];
-        
+
         if (navControl) {
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
             customModel.navControlRightMargin = navControlRightMargin;
@@ -271,9 +269,9 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
         }
         int statusBarStyle = [[dict objectForKey:@"statusBarStyle"] intValue];
         customModel.statusBarStyle = statusBarStyle;
-        
+
       customModel.isRepeatPlay = [[dict objectForKey:@"isRepeatPlay"] boolValue];
-        
+
       //           customModel.faceOrientation = UIInterfaceOrientationLandscapeLeft;
       customModel.animationRepeatCount = [[dict objectForKey:@"animationRepeatCount"] integerValue];
       NSArray *animationImages = [dict objectForKey:@"animationImages"];
@@ -284,7 +282,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
      customModel.animationImages = array;
      customModel.animationDuration = [[dict objectForKey:@"animationDuration"] integerValue];
       customModel.privacyState = [[dict objectForKey:@"privacyState"] boolValue];
-        
+
       int authWindowPop = [[dict objectForKey:@"authWindowPop"] intValue];
       if (authWindowPop == 0) {
           customModel.authWindowPop = NTESAuthWindowPopFullScreen;
@@ -293,40 +291,40 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
       } else {
           customModel.authWindowPop = NTESAuthWindowPopBottom;
       }
-        
+
       int closePopImgHeight = [[dict objectForKey:@"closePopImgHeight"] intValue];
       int closePopImgWidth = [[dict objectForKey:@"closePopImgWidth"] intValue];
       customModel.closePopImgWidth = closePopImgWidth;
       customModel.closePopImgHeight = closePopImgHeight;
-        
+
       int closePopImgOriginY = [[dict objectForKey:@"closePopImgOriginY"] intValue];
       int closePopImgOriginX = [[dict objectForKey:@"closePopImgOriginX"] intValue];
       customModel.closePopImgOriginX = closePopImgOriginX;
       customModel.closePopImgOriginY = closePopImgOriginY;
-        
+
       float scaleH = [[dict objectForKey:@"scaleH"] floatValue];
       customModel.scaleH = scaleH;
-        
+
       float scaleW = [[dict objectForKey:@"scaleW"] floatValue];
       customModel.scaleW = scaleW;
-        
+
       int authWindowCenterOriginX = [[dict objectForKey:@"authWindowCenterOriginX"] intValue];
       int authWindowCenterOriginY = [[dict objectForKey:@"authWindowCenterOriginY"] intValue];
       customModel.authWindowCenterOriginY = authWindowCenterOriginY;
       customModel.authWindowCenterOriginX = authWindowCenterOriginX;
-        
+
       int popCenterCornerRadius = [[dict objectForKey:@"popCenterCornerRadius"] intValue];
       int popBottomCornerRadius = [[dict objectForKey:@"popBottomCornerRadius"] intValue];
       customModel.popBottomCornerRadius = popBottomCornerRadius;
       customModel.popCenterCornerRadius = popCenterCornerRadius;
       customModel.presentDirectionType = [[dict objectForKey:@"presentDirectionType"] intValue];
-      
-      customModel.popBackgroundColor = [[UIColor ntes_colorWithHexString:[dict objectForKey:@"popBackgroundColor"]] colorWithAlphaComponent:[[dict objectForKey:@"alpha"] doubleValue]];
+
+      customModel.popBackgroundColor = [[self ntes_colorWithHexString:[dict objectForKey:@"popBackgroundColor"]] colorWithAlphaComponent:[[dict objectForKey:@"alpha"] doubleValue]];
       UIViewController *rootController = [UIApplication sharedApplication].delegate.window.rootViewController;
       customModel.currentVC = rootController;
       customModel.rootViewController = rootController;
       [[NTESQuickLoginManager sharedInstance] setupModel:customModel];
-      
+
       customModel.backActionBlock = ^{
           NSMutableDictionary *dict = [NSMutableDictionary dictionary];
           [dict setValue:@"leftBackButton" forKey:@"clickViewType"];
@@ -348,7 +346,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
           [dict setValue:@"checkbox" forKey:@"clickViewType"];
           [dict setValue:@(isChecked) forKey:@"isCheckboxChecked"];
         [self sendEvent:dict];
-          
+
       };
       customModel.privacyActionBlock = ^(int privacyType) {
           NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -363,7 +361,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
           [dict setValue:@"privacy" forKey:@"clickViewType"];
         [self sendEvent:dict];
       };
-  
+
   });
 
 }
@@ -390,7 +388,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
 /// 授权认证接口
 RCT_EXPORT_METHOD(login:(RCTResponseSenderBlock)callback) {
   [[NTESQuickLoginManager sharedInstance] CUCMCTAuthorizeLoginCompletion:^(NSDictionary * _Nonnull resultDic) {
-    
+
     NSNumber *boolNum = [resultDic objectForKey:@"success"];
     BOOL success = [boolNum boolValue];
     callback(@[@(success), resultDic]);
@@ -458,10 +456,99 @@ RCT_EXPORT_METHOD(getCarrier:(RCTResponseSenderBlock)callback)
 
 - (void)sendEvent:(id)body {
   dispatch_async(dispatch_get_main_queue(), ^(){
-   [self sendEventWithName:@"uiCallback" body:body];
+//   [self sendEventWithName:@"uiCallback" body:body];
   });
 }
 
+- (nullable UIColor *)ntes_colorWithDynamicProviderWithWhiteColor:(UIColor *)whiteColor andDarkColor:(UIColor *)darkColor {
+     if (@available(iOS 13.0, *)) {
+         UIColor *dynamicColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+            if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+                return darkColor;
+            } else {
+                return whiteColor;
+            }
+         }];
+         return dynamicColor;
+     } else {
+         return whiteColor;
+     }
+}
+
+- (nullable UIColor *)ntes_colorWithHexString:(NSString *)string {
+    return [self ntes_colorWithHexString:string alpha:1.0f];
+}
+
+- (nullable UIColor *)ntes_colorWithHexString:(NSString *)string alpha:(CGFloat)alpha {
+    NSString *pureHexString = [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    if ([pureHexString hasPrefix:[@"#" uppercaseString]] || [pureHexString hasPrefix:[@"#" lowercaseString]]) {
+        pureHexString = [pureHexString substringFromIndex:1];
+    }
+
+    CGFloat r, g, b, a;
+    if (ntes_hexStrToRGBA(string, &r, &g, &b, &a)) {
+        return [UIColor colorWithRed:r green:g blue:b alpha:a];
+    }
+    return nil;
+}
+
+static BOOL ntes_hexStrToRGBA(NSString *str, CGFloat *r, CGFloat *g, CGFloat *b, CGFloat *a) {
+    NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    str = [[str stringByTrimmingCharactersInSet:set] uppercaseString];
+    if ([str hasPrefix:@"#"]) {
+        str = [str substringFromIndex:1];
+    } else if ([str hasPrefix:@"0X"]) {
+        str = [str substringFromIndex:2];
+    }
+
+    NSUInteger length = [str length];
+    //         RGB            RGBA          RRGGBB        RRGGBBAA
+    if (length != 3 && length != 4 && length != 6 && length != 8) {
+        return NO;
+    }
+
+    //RGB,RGBA,RRGGBB,RRGGBBAA
+    if (length < 5) {
+        *r = ntes_hexStrToInt([str substringWithRange:NSMakeRange(0, 1)]) / 255.0f;
+        *g = ntes_hexStrToInt([str substringWithRange:NSMakeRange(1, 1)]) / 255.0f;
+        *b = ntes_hexStrToInt([str substringWithRange:NSMakeRange(2, 1)]) / 255.0f;
+        if (length == 4) {
+            *a = ntes_hexStrToInt([str substringWithRange:NSMakeRange(3, 1)]) / 255.0f;
+        } else {
+            *a = 1;
+        }
+    } else {
+        *r = ntes_hexStrToInt([str substringWithRange:NSMakeRange(0, 2)]) / 255.0f;
+        *g = ntes_hexStrToInt([str substringWithRange:NSMakeRange(2, 2)]) / 255.0f;
+        *b = ntes_hexStrToInt([str substringWithRange:NSMakeRange(4, 2)]) / 255.0f;
+        if (length == 8) {
+            *a = ntes_hexStrToInt([str substringWithRange:NSMakeRange(6, 2)]) / 255.0f;
+        } else {
+            *a = 1;
+        }
+    }
+    return YES;
+}
+
+static inline NSUInteger ntes_hexStrToInt(NSString *str) {
+    uint32_t result = 0;
+    sscanf([str UTF8String], "%X", &result);
+    return result;
+}
+
+- (UIImage * _Nullable)imageWithName:(NSString * _Nonnull)imageName class:(Class)cla {
+
+    if (!imageName) {
+        return nil;
+    }
+    NSBundle *myBundle = [NSBundle bundleForClass:cla];
+    NSString *bundlePath = [myBundle pathForResource:@"NTESResource" ofType:@"bundle"];
+    NSBundle *imageBundle = [NSBundle bundleWithPath:bundlePath];
+
+    UIImage *image = [UIImage imageNamed:imageName inBundle:imageBundle compatibleWithTraitCollection:nil];
+
+    return image;
+}
 
 @end
   
