@@ -12,7 +12,7 @@
 
 @implementation RNQuickloginPlugin
 
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE(QuickLoginPlugin);
 
 RCT_EXPORT_METHOD(initQuickLogin:(NSString *)businessID)
 {
