@@ -6,6 +6,10 @@
 npm install --save https://github.com/yidun/quickpass-react-native.git
 react-native link react-native-quicklogin-plugin
 ```
+也可以直接使用
+```
+npm install react-native-quicklogin-plugin
+```
 ## 配置依赖
 在react-native工程对应的android/app/build.gradle 文件的android域中添加
 ```
