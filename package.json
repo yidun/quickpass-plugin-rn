@@ -1,7 +1,7 @@
 {
   "name": "react-native-quicklogin-plugin",
   "version": "1.0.0",
-  "description": "",
+  "description": "A ReactNative QuickLogin Component for android and iOS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,8 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": "liulingfeng",
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
   }
