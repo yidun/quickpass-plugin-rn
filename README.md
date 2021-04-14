@@ -333,8 +333,8 @@ iOS版本，[iOS自定义项说明](https://support.dun.163.com/documents/287305
     "protocolColor": "#3478F7", // 协议条款协议名称颜色
 
     "authWindowPop": 0, // 全屏模式
-    "scaleW": 0.9, // 自定义窗口宽-缩放系数(屏幕宽乘以系数) 
-    "scaleH": 0.5, // 自定义窗口高-缩放系数(屏幕高乘以系数) 
+    "authWindowWidth": 300, // 自定义窗口宽- 竖屏状态下默认是 300pt，横屏状态下默认是 335pt
+    "authWindowHeight": 200, // 自定义窗口高- 竖屏状态下默认是335pt， 横屏状态下默认是300pt 
     "closePopImg": "back", // 居中弹窗 ,底部弹窗，
     "closePopImgWidth": 20, // 居中弹窗 ,底部弹窗，视图的关闭按钮的图片的宽度
     "closePopImgHeight": 20, // 居中弹窗,底部弹窗，视图的关闭按钮的图片的高度
@@ -358,6 +358,11 @@ iOS版本，[iOS自定义项说明](https://support.dun.163.com/documents/287305
     "modalTransitionStyle": 1, // 授权页转场动画 0 : 下推 ,1 :翻转, 2 :淡出.
     
     "statusBarStyle": 0, // 授权页状态栏的颜色 0:黑色 1：白色
+    
+    "contentMode":0,/**背景图片显示模式 UIViewContentModeScaleToFill = 0, UIViewContentModeScaleAspectFit = 1, UIViewContentModeScaleAspectFill = 2*/
+    "appPrivacyLineSpacing":1,/**隐私协议的行间距, 默认是1*/
+    "appPrivacyWordSpacing":1,/**隐私协议的字间距, 默认是0*/
+    
     "widgets": [
       {
         "type": "UIButton", 

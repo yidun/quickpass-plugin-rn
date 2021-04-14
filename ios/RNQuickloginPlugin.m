@@ -302,11 +302,15 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
       customModel.closePopImgOriginX = closePopImgOriginX;
       customModel.closePopImgOriginY = closePopImgOriginY;
 
-      float scaleH = [[dict objectForKey:@"scaleH"] floatValue];
-      customModel.scaleH = scaleH;
-
-      float scaleW = [[dict objectForKey:@"scaleW"] floatValue];
-      customModel.scaleW = scaleW;
+      float authWindowHeight = [[dict objectForKey:@"authWindowHeight"] floatValue];
+      customModel.authWindowHeight = authWindowHeight;
+        
+      float authWindowWidh = [[dict objectForKey:@"authWindowWidh"] floatValue];
+      customModel.authWindowWidth = authWindowWidh;
+    
+      customModel.contentMode = [[dict objectForKey:@"contentMode"] intValue];
+      customModel.appPrivacyLineSpacing =  [[dict objectForKey:@"appPrivacyLineSpacing"] intValue];
+      customModel.appPrivacyWordSpacing =  [[dict objectForKey:@"appPrivacyWordSpacing"] intValue];
 
       int authWindowCenterOriginX = [[dict objectForKey:@"authWindowCenterOriginX"] intValue];
       int authWindowCenterOriginY = [[dict objectForKey:@"authWindowCenterOriginY"] intValue];
