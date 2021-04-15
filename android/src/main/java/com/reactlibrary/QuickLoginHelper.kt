@@ -21,8 +21,6 @@ class QuickLoginHelper {
 
     fun init(businessId: String) {
         quickLogin = QuickLogin.getInstance(context, businessId)
-        quickLogin?.setDebugMode(true)
-
     }
 
     fun setUiConfig(uiConfig: Map<String, Any>?) {
