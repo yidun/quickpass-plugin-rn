@@ -3,19 +3,19 @@
 
 ## 导入插件
 ```
-npm install --save https://github.com/yidun/quickpass-react-native.git
-react-native link react-native-quicklogin-plugin
+npm install --save https://github.com/yidun/quickpass-plugin-rn.git
+react-native link @yidun/quickpass-plugin-rn
 ```
 也可以直接使用
 ```
-npm install react-native-quicklogin-plugin
+npm install @yidun/quickpass-plugin-rn
 ```
 ## 配置依赖
 在react-native工程对应的android/app/build.gradle 文件的android域中添加
 ```
 repositories {
 	        flatDir {
-	            dirs project(':react-native-quicklogin-plugin').file('libs')
+	            dirs project(':@yidun/quickpass-plugin-rn').file('libs')
 	        }
 	}
 ```

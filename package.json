@@ -1,17 +1,25 @@
 {
-  "name": "react-native-quicklogin-plugin",
-  "version": "1.0.2",
-  "description": "A ReactNative QuickLogin Component for android and iOS",
+  "name": "@yidun/quickpass-plugin-rn",
+  "version": "1.0.3",
+  "description": "yidun quickpass react-native plugin",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "yidun",
+    "一键登录",
+    "本机校验"
   ],
-  "author": "liulingfeng",
-  "license": "MIT",
+  "author": "yidun",
+  "license": "Apache 2.0",
   "peerDependencies": {
     "react-native": "^0.41.2"
+  },
+  "homepage": "",
+  "publishConfig": {
+    "access": "public"
   }
+
 }
