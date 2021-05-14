@@ -15,7 +15,7 @@ npm install @yidun/quickpass-plugin-rn
 ```
 repositories {
 	        flatDir {
-	            dirs project(':@yidun/quickpass-plugin-rn').file('libs')
+	            dirs project(':yidun_quickpass-plugin-rn').file('libs')
 	        }
 	}
 ```
