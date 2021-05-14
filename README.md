@@ -4,7 +4,7 @@
 ## 导入插件
 ```
 npm install --save https://github.com/yidun/quickpass-react-native.git
-react-native link react-native-quicklogin-plugin
+react-native link quickpass-plugin-rn
 ```
 也可以直接使用
 ```
