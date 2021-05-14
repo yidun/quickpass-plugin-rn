@@ -491,3 +491,6 @@ NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
 ```js
 NativeModules.QuickLoginPlugin.closeAuthController()
 ```
+
+### Demo
+具体可参考 https://github.com/yidun/quicklogin_react_demo
