@@ -3,8 +3,8 @@
 
 ## 导入插件
 ```
-npm install --save https://github.com/yidun/quickpass-react-native.git
-react-native link quickpass-plugin-rn
+npm install --save https://github.com/yidun/quickpass-plugin-rn.git
+react-native link react-native-quicklogin-plugin
 ```
 也可以直接使用
 ```
