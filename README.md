@@ -140,7 +140,7 @@ android版，[安卓自定义项说明](https://support.dun.163.com/documents/28
     "loginBtnTopYOffset": 250, // 设置登录按钮顶部Y轴偏移，单位dp
     "loginBtnBottomYOffset": 0, // 设置登录按钮距离屏幕底部偏移，单位dp
     "loginBtnXOffset": 0, // 设置登录按钮水平方向的偏移，单位dp
-    "loginBtnBackgroundRes":"btn_shape_login_onepass", // 支持按钮背景图片设置，如"static/launchImage.png"
+    "loginBtnBackgroundRes":"btn_shape_login_onepass", // 支持按钮背景图片设置，如"launchImage.png"
 
     "privacyTextColor": -6710887, // 设置隐私栏文本颜色，不包括协议 ，如若隐私栏协议文案为：登录即同意《中国移动认证条款》且授权QuickLogin登录， 则该API对除协议‘《中国移动认证条款》’区域外的其余文本生效
     "privacyProtocolColor": -13480449, // 设置隐私栏协议颜色 。例如：登录即同意《中国移动认证条款》且授权QuickLogin登录 ， 则该API仅对‘《中国移动认证条款》’文案生效
