@@ -4,8 +4,9 @@
 #else
 #import <React/RCTBridgeModule.h>
 #endif
+#import <React/RCTEventEmitter.h>
 
-@interface RNQuickloginPlugin : NSObject <RCTBridgeModule>
+@interface RNQuickloginPlugin : RCTEventEmitter <RCTBridgeModule>
 
 @end
 

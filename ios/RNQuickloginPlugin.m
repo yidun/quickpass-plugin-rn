@@ -460,7 +460,7 @@ RCT_EXPORT_METHOD(getCarrier:(RCTResponseSenderBlock)callback)
 
 - (void)sendEvent:(id)body {
   dispatch_async(dispatch_get_main_queue(), ^(){
-//   [self sendEventWithName:@"uiCallback" body:body];
+   [self sendEventWithName:@"uiCallback" body:body];
   });
 }
 
