@@ -11,12 +11,10 @@ import java.util.HashMap;
 
 public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
 
-    private final ReactApplicationContext reactContext;
     private final QuickLoginHelper quickLoginHelper;
 
     public RNQuickloginPluginModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        this.reactContext = reactContext;
         quickLoginHelper = new QuickLoginHelper(reactContext);
     }
 
@@ -43,7 +41,7 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void login(Callback callback) {
-        quickLoginHelper.onepass(callback);
+        quickLoginHelper.onePass(callback);
     }
 
     @ReactMethod
