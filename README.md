@@ -149,21 +149,21 @@ quichLoginPlugin.setUiConfig(config)
 ##### 状态栏
 | 配置项                                              | 说明                                   |
 | ------------------------------------------------- | -------------------------------------- |
-| statusBarColor:int |     设置状态栏背景颜色，十六进制颜色码对应的 int 值|
+| statusBarColor:String |     设置状态栏背景颜色，十六进制RGB值，如 "#ff0000"|
 | isStatusBarDarkColor:boolean | 设置状态栏字体图标颜色是否为暗色(黑色) |
 
 ##### 导航栏
 
 | 配置项                                              | 说明                                                         |
 | :------------------------------------------------ | ------------------------------------------------------------ |
-| navBackIcon:string                | 导航栏图标，图标放在 android drawable 下，这里配置图标名字 |
+| navBackIcon:String                | 导航栏图标，图标放在 android drawable 下，这里配置图标名字 |
 | navBackIconWidth:int     | 设置导航栏返回图标的宽度，单位 dp                                     |
 | navBackIconHeight:int  | 设置导航栏返回图标的高度，单位 dp                                     |
 | isHideBackIcon:boolean | 设置是否隐藏导航栏返回按钮                                       |
-| navBackgroundColor:int | 设置导航栏背景颜色，十六进制颜色码对应的 int 值                                           |
+| navBackgroundColor:String | 设置导航栏背景颜色，十六进制RGB值，如 "#ff0000"                                          |
 | navHeight:int                | 设置导航栏高度，单位 dp                                       |
 | navTitle:String                  | 设置导航栏标题                                               |
-| navTitleColor:int          | 设置导航栏标题颜色，十六进制颜色码对应的 int 值                                           |
+| navTitleColor:String          | 设置导航栏标题颜色，十六进制RGB值，如 "#ff0000"值                                           |
 | navTitleSize:int                 | 设置导航栏标题大小，单位 sp                                   |
 | isNavTitleBold:boolean             | 设置导航栏标题是否为粗体                                     |
 | isHideNav:boolean       | 设置是否隐藏导航栏                                           |
@@ -184,8 +184,8 @@ quichLoginPlugin.setUiConfig(config)
 
 | 配置项                                                         | 说明                                                         |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| maskNumberColor:int                      | 设置手机掩码颜色，十六进制颜色码对应的 int 值                                             |
-| maskNumberSize:int                        | 设置手机掩码字体大小，单位 sp                                 |
+| maskNumberColor:String                      | 设置手机掩码颜色，十六进制RGB值，如 "#ff0000"                                              |
+| maskNumberSize:int                        | 设置手机掩码字体大小，单位 px                                 |
 | maskNumberXOffset:int                  | 设置手机掩码水平方向的偏移，单位 dp                           |
 | maskNumberDpSize:int                    | 设置手机掩码字体大小，单位 dp                                 |
 | maskNumberTopYOffset:int      | 设置手机掩码顶部Y轴偏移，单位 dp                         |
@@ -195,9 +195,9 @@ quichLoginPlugin.setUiConfig(config)
 
 | 配置项                                            | 说明                                 |
 | :---------------------------------------------- | ------------------------------------ |
-| sloganSize:int                   | 设置认证品牌字体大小，单位 sp         |
+| sloganSize:int                   | 设置认证品牌字体大小，单位 px         |
 | sloganDpSize:int               | 设置认证品牌字体大小，单位 dp         |
-| sloganColor:int                 | 设置认证品牌颜色，十六进制颜色码对应的 int 值                     |
+| sloganColor:String                 | 设置认证品牌颜色，十六进制RGB值，如 "#ff0000"                      |
 | sloganTopYOffset:int       | 设置认证品牌顶部 Y 轴偏移，单位 dp      |
 | sloganBottomYOffset:int | 设置认证品牌距离屏幕底部偏移，单位 dp |
 | sloganXOffset:int             | 设置认证品牌水平方向的偏移，单位 dp   |
@@ -207,9 +207,9 @@ quichLoginPlugin.setUiConfig(config)
 | 配置项                                                   | 说明                                                 |
 | :----------------------------------------------------- | ---------------------------------------------------- |
 | loginBtnText:String                   | 设置登录按钮文本                                     |
-| loginBtnTextSize:int              | 设置登录按钮文本字体大小，单位 sp                     |
+| loginBtnTextSize:int              | 设置登录按钮文本字体大小，单位 px                     |
 | loginBtnTextDpSize:int          | 设置登录按钮文本字体大小，单位 dp                     |
-| loginBtnTextColor:int           | 设置登录按钮文本颜色，十六进制颜色码对应的 int 值                                 |
+| loginBtnTextColor:String           | 设置登录按钮文本颜色，十六进制RGB值，如 "#ff0000"                                 |
 | loginBtnWidth:int                    | 设置登录按钮宽度，单位 dp                             |
 | loginBtnHeight:int                  | 设置登录按钮高度，单位 dp                             |
 | loginBtnBackgroundRes:String | 设置登录按钮背景图标，图标放在 android drawable 下，这里配置图标名字 |
@@ -223,7 +223,7 @@ quichLoginPlugin.setUiConfig(config)
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | privacyTextColor:int                    | 设置隐私栏文本颜色，不包括协议 ，如若隐私栏协议文案为：登录即同意《中国移动认证条款》且授权 QuickLogin 登录， 则该API对除协议‘《中国移动认证条款》’区域外的其余文本生效 |
 | privacyProtocolColor:int            | 设置隐私栏协议颜色 。例如：登录即同意《中国移动认证条款》且授权 QuickLogin 登录 ， 则该 API 仅对‘《中国移动认证条款》’文案生效 |
-| privacySize:int                              | 设置隐私栏区域字体大小，单位 sp                               |
+| privacySize:int                              | 设置隐私栏区域字体大小，单位 px                               |
 | privacyDpSize:int                          | 设置隐私栏区域字体大小，单位 dp                               |
 | privacyTopYOffset:int                  | 设置隐私栏顶部Y轴偏移，单位 dp                                |
 | privacyBottomYOffset:int            | 设置隐私栏距离屏幕底部偏移，单位 dp                           |
@@ -246,11 +246,10 @@ quichLoginPlugin.setUiConfig(config)
 | 配置项                                                         | 说明                                                         |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | protocolNavTitle:String             | 设置协议 Web 页面导航栏标题，如果需要根据不同运营商设置不同标题|
-| setProtocolPageNavTitleColor(int protocolNavTitleColor)      | 设置协议 Web 页面导航栏标题颜色                                |
 | protocolNavBackIcon:String       | 设置协议 Web 页面导航栏返回图标，图标放在 android drawable 下，这里配置图标名字                                |
-| protocolNavColor:int                | 设置协议Web页面导航栏颜色                                    |
+| protocolNavColor:String                | 设置协议Web页面导航栏颜色                                    |
 | protocolNavHeight:int             | 设置协议 Web 页面导航栏高度                                    |
-| protocolNavTitleSize:int        | 设置协议Web页面导航栏标题大小，单位 sp                        |
+| protocolNavTitleSize:int        | 设置协议Web页面导航栏标题大小，单位 px                        |
 | protocolNavTitleDpSize:int    | 设置协议 Web 页面导航栏标题大小，单位 dp                        |
 | protocolNavBackIconWidth:int | 设置协议 Web 页面导航栏返回按钮宽度，单位 dp                    |
 | protocolNavBackIconHeight:int | 设置协议 Web 页面导航栏返回按钮高度，单位 dp                    |
@@ -509,7 +508,7 @@ quichLoginPlugin.login((success, data) => {
     |----|----|----|
     | success|Boolean|授权是否成功|
 	| data.accessToken|String|如果取号成功返回运营商授权码，否则无此字段|
-	| data.desc|String|如果取号失败，返回的错误详情, 否则返回"预取号成功|
+	| data.desc|String|如果取号失败，返回的错误详情, 否则返回"取号成功|
 
 ### 7. 事件监听	
 
