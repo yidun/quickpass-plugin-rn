@@ -509,7 +509,7 @@ quichLoginPlugin.login((success, data) => {
     |----|----|----|
     | success|Boolean|授权是否成功|
 	| data.accessToken|String|如果取号成功返回运营商授权码，否则无此字段|
-	| data.desc|String|如果取号失败，返回的错误详情, 否则返回"预取号成功|
+	| data.desc|String|如果取号失败，返回的错误详情, 否则返回"取号成功|
 
 ### 7. 事件监听	
 
