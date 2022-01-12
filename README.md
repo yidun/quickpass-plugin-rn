@@ -368,7 +368,7 @@ quichLoginPlugin.setUiConfig(config)
 
 | 属性                                              | 说明                                                         |
 | :-------- | -------- |
-| logoImg | 设置logo图片, 例如 ： model.logoImg = [UIImage imageNamed:@"logo1"]|
+| logoIconName | 设置logo图片, 例如 ： model.logoImg = [UIImage imageNamed:@"logo1"]|
 | logoWidth   | 设置logo图片宽度 |
 | logoHeight  | 设置logo图片高度 |
 | logoOffsetTopY  |设置logo图片沿Y轴偏移量， logoOffsetTopY为距离屏幕顶部的距离 ，默认为20|
