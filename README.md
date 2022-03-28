@@ -43,23 +43,39 @@ export default class App extends Component {
       let uiJsonConfig;
       if (Platform.OS==='android') {
         uiJsonConfig = androidConfigJson;
+        NativeModules.QuickLoginPlugin.setUiConfig(uiJsonConfig);
+        NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
+            if (!success) return
+            NativeModules.QuickLoginPlugin.closeAuthController();
+
+            fetch('您的后端认证接口', {
+                method: 'POST',
+                body: JSON.stringify({
+                    token,
+                    accessToken: resultDic.accessToken
+                })
+            })
+        })
       } else {
         uiJsonConfig = iosConfigJson;
-      }
-  
-      NativeModules.QuickLoginPlugin.setUiConfig(uiJsonConfig);
-      NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
-        if (!success) return
-        NativeModules.QuickLoginPlugin.closeAuthController();
+        NativeModules.QuickLoginPlugin.setUiConfig(uiJsonConfig, (success, resultDic) => {
+            if (success) {
+                console.log("设置UI成功")
+                NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
+                    if (!success) return
+                    NativeModules.QuickLoginPlugin.closeAuthController();
 
-        fetch('您的后端认证接口', {
-          method: 'POST',
-          body: JSON.stringify({
-            token,
-            accessToken: resultDic.accessToken
-          })
-        })
-      })
+                    fetch('您的后端认证接口', {
+                        method: 'POST', 
+                        body: JSON.stringify({
+                            token,
+                            accessToken: resultDic.accessToken
+                        })
+                    })
+                });
+            } 
+        });
+      }
     })
   }
 
@@ -128,7 +144,12 @@ quichLoginPlugin.prefetchNumber((success, data) => {
 
 #### 代码说明：
 ```
-quichLoginPlugin.setUiConfig(config)
+NativeModules.QuickLoginPlugin.setUiConfig(config, (success, data) => {
+    if (success) {  
+        // TODO:设置UI成功，可以进行取号接口调用
+    } else {
+    }
+});
 ```
 
 #### 参数说明：
@@ -137,6 +158,9 @@ quichLoginPlugin.setUiConfig(config)
     |参数|类型|是否必填|默认值|描述|
     |----|----|--------|------|----|
     |config|Object|是|无|自定义配置项|
+    |success|Boolean|设置授权页面UI成功|
+    |data|Object|返回参数值，默认为空|
+    
 	
 #### config 可配置项说明： android版
 

@@ -45,7 +45,7 @@ RCT_EXPORT_METHOD(closeAuthController)
    });
 }
 
-RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
+RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSenderBlock)callback)  {
   dispatch_async(dispatch_get_main_queue(), ^(){
     self.option = option;
     NSDictionary *dict = self.option;
@@ -366,6 +366,9 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option)  {
         [self sendEvent:dict];
       };
 
+      dispatch_async(dispatch_get_main_queue(), ^{
+         callback(@[@(success), nil]);
+      });
   });
 
 }
