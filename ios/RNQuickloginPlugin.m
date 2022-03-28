@@ -367,7 +367,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       };
 
       dispatch_async(dispatch_get_main_queue(), ^{
-         callback(@[@(success), nil]);
+         callback(@[@(YES)]);
       });
   });
 

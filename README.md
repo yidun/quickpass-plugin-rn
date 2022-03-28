@@ -58,7 +58,7 @@ export default class App extends Component {
         })
       } else {
         uiJsonConfig = iosConfigJson;
-        NativeModules.QuickLoginPlugin.setUiConfig(uiJsonConfig, (success, resultDic) => {
+        NativeModules.QuickLoginPlugin.setUiConfig(uiJsonConfig, (success) => {
             if (success) {
                 console.log("设置UI成功")
                 NativeModules.QuickLoginPlugin.login((success, resultDic)=>{
@@ -144,7 +144,7 @@ quichLoginPlugin.prefetchNumber((success, data) => {
 
 #### 代码说明：
 ```
-NativeModules.QuickLoginPlugin.setUiConfig(config, (success, data) => {
+NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
     if (success) {  
         // TODO:设置UI成功，可以进行取号接口调用
     } else {
@@ -159,7 +159,6 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success, data) => {
     |----|----|--------|------|----|
     |config|Object|是|无|自定义配置项|
     |success|Boolean|设置授权页面UI成功|
-    |data|Object|返回参数值，默认为空|
     
 	
 #### config 可配置项说明： android版

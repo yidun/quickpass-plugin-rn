@@ -1,6 +1,6 @@
 {
   "name": "@yidun/quickpass-plugin-rn",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "yidun quickpass react-native plugin",
   "main": "index.js",
   "scripts": {
