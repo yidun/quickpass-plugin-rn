@@ -4,7 +4,7 @@
 ## 平台支持（兼容性）
   | Android|iOS|  
   | ---- | ---- |
-  | 适用版本区间：4.4 - 11.0|适用版本区间：9 - 14| 
+  | 适用版本区间：4.4以上|适用版本区间：9 - 14| 
   
 ## 环境准备
 
@@ -139,8 +139,27 @@ quichLoginPlugin.prefetchNumber((success, data) => {
     | success|Boolean|预取号成功|
 	| data.token|String|如果预取号成功则返回易盾token，否则无此字段|
 	| data.desc|String|如果预取号失败，返回错误详情, 否则无此字段|
-	
-### 4. 自定义授权页面
+
+### 4. 是否具备一键登录能力
+
+#### 代码说明：
+```
+quichLoginPlugin.checkVerifyEnable((success) => {
+  if (success) {
+    // TODO: 具备一键登录能力
+  } else {
+    // TODO: 不具备一键登录能力
+  }
+})
+```
+#### 参数说明：
+*  回调参数说明：
+ 
+    |回调参数|类型|描述|
+    |----|----|----|
+    | success|Boolean|是否具备一键登录能力|
+    	
+### 5. 自定义授权页面
 
 #### 代码说明：
 ```
@@ -182,6 +201,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | navBackIcon:String                | 导航栏图标，图标放在 android drawable 下，这里配置图标名字 |
 | navBackIconWidth:int     | 设置导航栏返回图标的宽度，单位 dp                                     |
 | navBackIconHeight:int  | 设置导航栏返回图标的高度，单位 dp                                     |
+| navBackIconGravity:int  | 设置导航栏返回图标位置，居左 3，居右 5，默认居左                                    |
 | isHideBackIcon:boolean | 设置是否隐藏导航栏返回按钮                                       |
 | navBackgroundColor:String | 设置导航栏背景颜色，十六进制RGB值，如 "#ff0000"                                          |
 | navHeight:int                | 设置导航栏高度，单位 dp                                       |
@@ -250,18 +270,25 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | privacyDpSize:int                          | 设置隐私栏区域字体大小，单位 dp                               |
 | privacyTopYOffset:int                  | 设置隐私栏顶部Y轴偏移，单位 dp                                |
 | privacyBottomYOffset:int            | 设置隐私栏距离屏幕底部偏移，单位 dp                           |
+| privacyTextMarginLeft:int                  | 设置隐私栏复选框和文字内边距，单位 dp                             |
 | privacyMarginLeft:int                  | 设置隐私栏水平方向的偏移，单位 dp                             |
 | privacyMarginRight:int               | 设置隐私栏右侧边距，单位 dp                                   |
 | privacyState:boolean                        | 设置隐私栏协议复选框勾选状态，true 勾选，false 不勾选          |
 | isHidePrivacyCheckBox:boolean          | 设置是否隐藏隐私栏勾选框                                     |
 | isPrivacyTextGravityCenter:boolean                     | 设置隐私栏勾选框与文本协议对齐方式，可选择顶部（Gravity.TOP），居中（Gravity.CENTER），底部（Gravity.BOTTOM）等 |
+| checkBoxGravity:int                     | 设置隐私栏勾选框与文本协议对齐方式，可选择顶部（48），居中（17），底部（80）等 |
+| checkBoxWith:int                     | 设置隐私栏复选框宽度，单位 dp|
+| checkBoxHeight:int                     | 设置隐私栏复选框高度，单位 dp |
 | checkedImageName:string                | 设置隐私栏复选框选中时的图片资源，图标放在 android drawable 下，这里配置图标名字 |
 | unCheckedImageName:String             | 设置隐私栏复选框未选中时的图片资源，图标放在 android drawable 下，这里配置图标名字 |
 | privacyTextStart:String                 | 设置隐私栏声明部分起始文案 。如：隐私栏声明为"登录即同意《隐私政策》和《中国移动认证条款》且授权易盾授予本机号码"，则可传入"登录即同意" |
+| isHidePrivacySmh:boolean                    | 是否隐藏运营商协议书名号                                           |
 | protocolText:String                         | 设置隐私栏协议文本                                           |
 | protocolLink:String                         | 设置隐私栏协议链接                                           |
 | protocol2Text:String                       | 设置隐私栏协议 2 文本                                          |
 | protocol2Link:String                       | 设置隐私栏协议 2 链接                                          |
+| protocol3Text:String                       | 设置隐私栏协议 3 文本                                          |
+| protocol3Link:String                       | 设置隐私栏协议 3 链接                                          |
 | privacyTextEnd:String                     | 设置隐私栏声明部分尾部文案。如：隐私栏声明为"登录即同意《隐私政策》和《中国移动认证条款》且授权易盾授予本机号码"，则可传入"且授权易盾授予本机号码" |
 
 ##### 协议详情 Web 页面导航栏
@@ -294,6 +321,11 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | dialogX:int      | 授权页弹窗 X 轴偏移量，以屏幕中心为原点 |
 | dialogY:int      | 授权页弹窗 Y 轴偏移量，以屏幕中心为原点 |
 | isBottomDialog:boolean      | 授权页弹窗是否贴于屏幕底部<br>true：显示在屏幕底部，dialogY 失效<br> false：不显示在屏幕底部，以 dialogY 参数为准 |
+| isProtocolDialogMode:boolean      | 协议详情页是否开启弹窗模式 |
+| isPrivacyDialogAuto:boolean      | 协议未勾选弹窗点击是否自动登录 |
+| isShowPrivacyDialog:boolean      | 是否显示协议未勾选默认弹窗 |
+| privacyDialogText:String      | 协议未勾选弹窗自定义message |
+| privacyDialogSize:float      | 协议未勾选弹窗文本字体大小 |
 
 ##### 自定义view
 
@@ -511,7 +543,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | privacyActionBlock | 设置协议点击事件回调<br> privacyType 等于 0 表示点击默认协议 <br> privacyType 等于 1 表示点击第1个协议 <br> privacyType 等于 2 表示点击第2个协议 <br>例如：model.privacyActionBlock = ^(int privacyType) {}|
 | pageCustomBlock | 设置协议点击事件回调，不会跳转到默认的协议页面。开发者可以在回调里，自行跳转到自定义的协议页面|  
 
-### 5. 调起授权页面
+### 6. 调起授权页面
 
 #### 代码说明：
 ```
@@ -559,9 +591,40 @@ value 是一个 Map ，里面包含各种 key 和对应的值
 	| value.clickViewType|String|privacy - 隐私协议点击事件，checkbox - 复选框点击事件（含isCheckboxChecked: 0/1），loginButton - 登录按钮点击事件（含isCheckboxChecked: 0/1），leftBackButton - 左上角返回按钮点击事件|
 	| value.isCheckboxChecked|String|协议复选框的值，仅在复选框事件和登录按钮点击事件中存在|
 
-### 6. 关闭授权页面
+### 8. 关闭授权页面
 
 #### 代码说明：
 ```
 quichLoginPlugin.closeAuthController()
 ```
+
+### 9. 本机校验
+
+在初始化之后执行，本机校验和一键登录可共用初始化，本机校验界面需自行实现
+
+#### 代码说明：
+```
+quichLoginPlugin.verifyPhoneNumber(String phoneNumber,(success, data) => {
+  if (success) {
+    // TODO: 本机校验成功处理
+  } else {
+    // TODO: 本机校验失败处理
+  }
+})
+```
+#### 参数说明：
+*  入参说明：
+
+    |参数|类型|是否必填|默认值|描述|
+    |----|----|--------|------|----|
+    |phoneNumber|String|是|无| 待校验手机号 |
+    
+*  回调参数说明：
+ 
+    |回调参数|类型|描述|
+    |----|----|----|
+    | success|Boolean|授权是否成功|
+	| data.accessToken|String|如果本机校验返回运营商授权码，否则无此字段|
+	| data.desc|String|如果本机校验失败，返回的错误详情, 否则返回"本机校验成功|
+
+

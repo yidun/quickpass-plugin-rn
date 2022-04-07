@@ -29,10 +29,9 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setUiConfig(ReadableMap uiConfig) {
-        quickLoginHelper.setUiConfig(Utils.toHashMap(uiConfig));
+    public void setUiConfig(ReadableMap uiConfig, Callback callback) {
+        quickLoginHelper.setUiConfig(Utils.toHashMap(uiConfig), callback);
     }
-
 
     @ReactMethod
     public void prefetchNumber(Callback callback) {
@@ -47,5 +46,14 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void closeAuthController() {
         quickLoginHelper.quitActivity();
+    }
+
+    @ReactMethod
+    public void checkVerifyEnable(Callback callback) {
+        quickLoginHelper.checkVerifyEnable(callback);
+    }
+
+    public void verifyPhoneNumber(String phoneNumber, Callback callback) {
+        quickLoginHelper.verifyPhoneNumber(phoneNumber, callback);
     }
 }

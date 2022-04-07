@@ -17,9 +17,11 @@ import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.modules.core.DeviceEventManagerModule
+import com.netease.nis.basesdk.Logger
 import com.netease.nis.quicklogin.QuickLogin.TAG
 import com.netease.nis.quicklogin.helper.UnifyUiConfig
 import com.netease.nis.quicklogin.listener.ActivityLifecycleCallbacks
+import com.netease.nis.quicklogin.listener.LoginListener
 
 /**
  * Created by hzhuqi on 2020/11/2
@@ -30,6 +32,7 @@ object UiConfigParser {
     private var navBackIcon: String? = null
     private var navBackIconWidth = 25
     private var navBackIconHeight = 25
+    private var navBackIconGravity = 0
     private var isHideBackIcon = false
     private var navHeight = 0
     private var navBackgroundColor: String? = null
@@ -73,6 +76,7 @@ object UiConfigParser {
     private var privacyDpSize = 0
     private var privacyTopYOffset = 0
     private var privacyBottomYOffset = 0
+    private var privacyTextMarginLeft = 0
     private var privacyMarginLeft = 0
     private var privacyMarginRight = 0
     private var privacyState = true
@@ -80,6 +84,8 @@ object UiConfigParser {
     private var isHidePrivacyCheckBox = false
     private var isPrivacyTextGravityCenter = false
     private var checkBoxGravity = 0
+    private var checkBoxWith = 0
+    private var checkBoxHeight = 0
     private var checkedImageName = "yd_checkbox_checked"
     private var unCheckedImageName = "yd_checkbox_unchecked"
     private var privacyTextStart: String? = "登录即同意"
@@ -87,6 +93,8 @@ object UiConfigParser {
     private var protocolLink: String? = null
     private var protocol2Text: String? = null
     private var protocol2Link: String? = null
+    private var protocol3Text: String? = null
+    private var protocol3Link: String? = null
     private var privacyTextEnd: String? = "且授权使用本机号码登录"
     private var protocolNavTitle: String? = null
     private var protocolNavBackIcon: String? = null
@@ -107,30 +115,33 @@ object UiConfigParser {
     private var dialogX = 0
     private var dialogY = 0
     private var isBottomDialog = false
+    private var isProtocolDialogMode = false
+    private var isPrivacyDialogAuto = false
+    private var isShowPrivacyDialog = true
+    private var privacyDialogText = ""
+    private var privacyDialogSize = 15.0f
 
     @SuppressLint("StaticFieldLeak")
     private var context: ReactContext? = null
-    private var bundleUrl: String? = null
     private var widgets: List<HashMap<String, Any>>? = null
-
-    fun JsonConfigParser(bundleUrl: String?) {
-        this.bundleUrl = bundleUrl
-    }
+    private var enterAnimation: String? = null
+    private var exitAnimation: String? = null
 
     @Suppress("UNCHECKED_CAST")
     private fun parser(uiConfig: Map<String, Any>) {
-        Log.d("Quick", "uiConfig--->$uiConfig")
+        Logger.d("uiConfig--->$uiConfig")
         statusBarColor = (uiConfig["statusBarColor"] ?: "") as String
         isStatusBarDarkColor = (uiConfig["isStatusBarDarkColor"] ?: false) as Boolean
         navBackIcon = (uiConfig["navBackIcon"] ?: "") as String
         navBackIconWidth = ((uiConfig["navBackIconWidth"] ?: 25.0) as Double).toInt()
         navBackIconHeight = ((uiConfig["navBackIconHeight"] ?: 25.0) as Double).toInt()
+        navBackIconGravity = ((uiConfig["navBackIconGravity"] ?: Gravity.LEFT) as Double).toInt()
         isHideBackIcon = (uiConfig["isHideBackIcon"] ?: false) as Boolean
         navHeight = uiConfig["navHeight"]?.let { (it as Double).toInt() } ?: 50
-        navTitleSize = uiConfig["navTitleSize"]?.let { (it as Double).toInt() } ?: 18
-        isNavTitleBold = (uiConfig["isNavTitleBold"] ?: false) as Boolean
         navBackgroundColor = (uiConfig["navBackgroundColor"] ?: "#FFFFFF") as String
         navTitle = (uiConfig["navTitle"] ?: "") as String
+        navTitleSize = uiConfig["navTitleSize"]?.let { (it as Double).toInt() } ?: 18
+        isNavTitleBold = (uiConfig["isNavTitleBold"] ?: false) as Boolean
         navTitleColor = (uiConfig["navTitleColor"] ?: "#000000") as String
         isHideNav = (uiConfig["isHideNav"] ?: false) as Boolean
         logoIconName = (uiConfig["logoIconName"] ?: "") as String
@@ -168,6 +179,7 @@ object UiConfigParser {
         privacyDpSize = ((uiConfig["privacyDpSize"] ?: 0.0) as Double).toInt()
         privacyTopYOffset = ((uiConfig["privacyTopYOffset"] ?: 0.0) as Double).toInt()
         privacyBottomYOffset = ((uiConfig["privacyBottomYOffset"] ?: 0.0) as Double).toInt()
+        privacyTextMarginLeft = ((uiConfig["privacyTextMarginLeft"] ?: 0.0) as Double).toInt()
         privacyMarginLeft = ((uiConfig["privacyMarginLeft"] ?: 0.0) as Double).toInt()
         privacyMarginRight = ((uiConfig["privacyMarginRight"] ?: 0.0) as Double).toInt()
         privacyState = (uiConfig["privacyState"] ?: true) as Boolean
@@ -178,11 +190,15 @@ object UiConfigParser {
             ((uiConfig["checkBoxGravity"] ?: (Gravity.CENTER).toDouble()) as Double).toInt()
         checkedImageName = (uiConfig["checkedImageName"] ?: "") as String
         unCheckedImageName = (uiConfig["unCheckedImageName"] ?: "") as String
+        checkBoxWith = ((uiConfig["checkBoxWith"] ?: 15.0) as Double).toInt()
+        checkBoxHeight = ((uiConfig["checkBoxHeight"] ?: 15.0) as Double).toInt()
         privacyTextStart = (uiConfig["privacyTextStart"] ?: "") as String
         protocolText = (uiConfig["protocolText"] ?: "") as String
         protocolLink = (uiConfig["protocolLink"] ?: "") as String
         protocol2Text = (uiConfig["protocol2Text"] ?: "") as String
         protocol2Link = (uiConfig["protocol2Link"] ?: "") as String
+        protocol3Text = (uiConfig["protocol3Text"] ?: "") as String
+        protocol3Link = (uiConfig["protocol3Link"] ?: "") as String
         privacyTextEnd = (uiConfig["privacyTextEnd"] ?: "") as String
         protocolNavTitle = (uiConfig["protocolNavTitle"] ?: "协议详情") as String
         protocolNavBackIcon = (uiConfig["protocolNavBackIcon"] ?: "") as String
@@ -204,9 +220,16 @@ object UiConfigParser {
         dialogX = ((uiConfig["dialogX"] ?: 0.0) as Double).toInt()
         dialogY = ((uiConfig["dialogY"] ?: 0.0) as Double).toInt()
         isBottomDialog = (uiConfig["isBottomDialog"] ?: false) as Boolean
+        isProtocolDialogMode = (uiConfig["isProtocolDialogMode"] ?: false) as Boolean
+        isPrivacyDialogAuto = (uiConfig["isPrivacyDialogAuto"] ?: false) as Boolean
+        isShowPrivacyDialog = (uiConfig["isShowPrivacyDialog"] ?: true) as Boolean
+        privacyDialogText = (uiConfig["privacyDialogText"] ?: "") as String
+        privacyDialogSize = ((uiConfig["privacyDialogSize"] ?: 15.0) as Double).toFloat()
         widgets = uiConfig["widgets"]?.let {
             it as? List<HashMap<String, Any>>
         }
+        enterAnimation = (uiConfig["enterAnimation"] ?: "") as String
+        exitAnimation = (uiConfig["exitAnimation"] ?: "") as String
         Log.d(TAG, "ui config parser finished")
     }
 
@@ -218,9 +241,7 @@ object UiConfigParser {
 
     private fun buildUiConfig(context: Context): UnifyUiConfig {
         val builder: UnifyUiConfig.Builder = UnifyUiConfig.Builder()
-            .setStatusBarColor(Color.parseColor(statusBarColor))
             .setStatusBarDarkColor(isStatusBarDarkColor)
-            .setNavigationIconDrawable(getDrawable(navBackIcon, context))
             .setNavigationBackIconWidth(navBackIconWidth)
             .setNavigationBackIconHeight(navBackIconHeight)
             .setHideNavigationBackIcon(isHideBackIcon)
@@ -251,12 +272,9 @@ object UiConfigParser {
             .setSloganXOffset(sloganXOffset)
             .setSloganBottomYOffset(sloganBottomYOffset)
             .setLoginBtnText(loginBtnText)
-            .setLoginBtnBackgroundDrawable(getDrawable(loginBtnBackgroundRes, context))
             .setLoginBtnTextColor(Color.parseColor(loginBtnTextColor))
             .setLoginBtnTextSize(loginBtnTextSize)
             .setLoginBtnTextDpSize(loginBtnTextDpSize)
-            .setLoginBtnHeight(loginBtnHeight)
-            .setLoginBtnWidth(loginBtnWidth)
             .setLoginBtnTopYOffset(loginBtnTopYOffset)
             .setLoginBtnBottomYOffset(loginBtnBottomYOffset)
             .setLoginBtnXOffset(loginBtnXOffset)
@@ -275,17 +293,17 @@ object UiConfigParser {
             .setCheckBoxGravity(checkBoxGravity)
             .setCheckedImageDrawable(getDrawable(checkedImageName, context))
             .setUnCheckedImageDrawable(getDrawable(unCheckedImageName, context))
+            .setPrivacyCheckBoxWidth(checkBoxWith)
+            .setPrivacyCheckBoxHeight(checkBoxHeight)
             .setPrivacyTextStart(privacyTextStart)
             .setProtocolText(protocolText)
             .setProtocolLink(protocolLink)
             .setProtocol2Text(protocol2Text)
             .setProtocol2Link(protocol2Link)
+            .setProtocol3Text(protocol3Text)
+            .setProtocol3Link(protocol3Link)
             .setPrivacyTextEnd(privacyTextEnd)
-            .setBackgroundImageDrawable(getDrawable(backgroundImage, context))
-            .setBackgroundVideo(backgroundVideo, backgroundVideo)
-            .setBackgroundGifDrawable(getDrawable(backgroundGif, context))
-            .setProtocolPageNavTitle(protocolNavTitle)
-            .setProtocolPageNavBackIconDrawable(getDrawable(protocolNavBackIcon, context))
+            .setProtocolPageNavTitle(protocolNavTitle, protocolNavTitle, protocolNavTitle)
             .setProtocolPageNavColor(Color.parseColor(protocolNavColor))
             .setProtocolPageNavHeight(protocolNavHeight)
             .setProtocolPageNavTitleSize(protocolNavTitleSize)
@@ -301,6 +319,14 @@ object UiConfigParser {
                 dialogY,
                 isBottomDialog
             )
+            .setProtocolDialogMode(isProtocolDialogMode)
+            .setPrivacyDialogAuto(isPrivacyDialogAuto)
+            .setPrivacyDialogTextSize(privacyDialogSize)
+            .setLoginListener(object : LoginListener() {
+                override fun onDisagreePrivacy(privacyTv: TextView?, btnLogin: Button?): Boolean {
+                    return !isShowPrivacyDialog
+                }
+            })
             .setClickEventListener { viewType, code ->
                 if (viewType == UnifyUiConfig.CLICK_PRIVACY) {
                     Log.d(TAG, "点击了隐私协议")
@@ -385,6 +411,47 @@ object UiConfigParser {
                     sendEvent(resultMap)
                 }
             })
+        if (!TextUtils.isEmpty(statusBarColor)) {
+            builder.setStatusBarColor(Color.parseColor(statusBarColor))
+        }
+        if (!TextUtils.isEmpty(navBackIcon)) {
+            builder.setNavigationIconDrawable(getDrawable(navBackIcon, context))
+        }
+        if (!TextUtils.isEmpty(logoIconName)) {
+            builder.setLogoIconDrawable(getDrawable(logoIconName, context))
+        }
+        if (loginBtnWidth != 0) {
+            builder.setLoginBtnWidth(loginBtnWidth)
+        }
+        if (loginBtnHeight != 0) {
+            builder.setLoginBtnHeight(loginBtnHeight)
+        }
+        if (!TextUtils.isEmpty(loginBtnBackgroundRes)) {
+            builder.setLoginBtnBackgroundDrawable(getDrawable(loginBtnBackgroundRes, context))
+        }
+        if (!TextUtils.isEmpty(backgroundImage)) {
+            builder.setBackgroundImageDrawable(getDrawable(backgroundImage, context))
+        }
+        if (!TextUtils.isEmpty(backgroundVideo)) {
+            builder.setBackgroundVideo(backgroundVideo, backgroundVideoImage)
+        }
+        if (!TextUtils.isEmpty(privacyDialogText)) {
+            builder.setPrivacyDialogText(privacyDialogText)
+        }
+        if (!TextUtils.isEmpty(backgroundGif)) {
+            builder.setBackgroundGifDrawable(
+                getDrawable(
+                    backgroundGif,
+                    context
+                )
+            )
+        }
+        if (!TextUtils.isEmpty(protocolNavBackIcon)) {
+            builder.setProtocolPageNavBackIconDrawable(getDrawable(protocolNavBackIcon, context))
+        }
+        if (!TextUtils.isEmpty(enterAnimation) && !TextUtils.isEmpty(exitAnimation)) {
+            builder.setActivityTranslateAnimation(enterAnimation, exitAnimation)
+        }
         setCustomView(context, builder, widgets)
         Log.d(TAG, "---------------UI配置设置完成---------------")
         return builder.build(context)
