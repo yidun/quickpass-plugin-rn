@@ -243,6 +243,7 @@ object UiConfigParser {
     private fun buildUiConfig(context: Context): UnifyUiConfig {
         val builder: UnifyUiConfig.Builder = UnifyUiConfig.Builder()
             .setStatusBarDarkColor(isStatusBarDarkColor)
+            .setNavigationIconGravity(navBackIconGravity)
             .setNavigationBackIconWidth(navBackIconWidth)
             .setNavigationBackIconHeight(navBackIconHeight)
             .setHideNavigationBackIcon(isHideBackIcon)
@@ -285,6 +286,7 @@ object UiConfigParser {
             .setPrivacyDpSize(privacyDpSize)
             .setPrivacyTopYOffset(privacyTopYOffset)
             .setPrivacyBottomYOffset(privacyBottomYOffset)
+            .setPrivacyTextMarginLeft(privacyTextMarginLeft)
             .setPrivacyMarginLeft(privacyMarginLeft)
             .setPrivacyMarginRight(privacyMarginRight)
             .setPrivacyState(privacyState)
