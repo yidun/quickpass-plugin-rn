@@ -135,7 +135,8 @@ object UiConfigParser {
         navBackIcon = (uiConfig["navBackIcon"] ?: "") as String
         navBackIconWidth = ((uiConfig["navBackIconWidth"] ?: 25.0) as Double).toInt()
         navBackIconHeight = ((uiConfig["navBackIconHeight"] ?: 25.0) as Double).toInt()
-        navBackIconGravity = ((uiConfig["navBackIconGravity"] ?: Gravity.LEFT) as Double).toInt()
+        navBackIconGravity =
+            ((uiConfig["navBackIconGravity"] ?: (Gravity.LEFT).toDouble()) as Double).toInt()
         isHideBackIcon = (uiConfig["isHideBackIcon"] ?: false) as Boolean
         navHeight = uiConfig["navHeight"]?.let { (it as Double).toInt() } ?: 50
         navBackgroundColor = (uiConfig["navBackgroundColor"] ?: "#FFFFFF") as String
