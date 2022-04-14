@@ -17,12 +17,42 @@ npm install @yidun/quickpass-plugin-rn
 ```
 ### 项目开发配置
 
-在 react-native 工程对应的 android/app/build.gradle 文件的 android 域中添加
+旧版本需要在 react-native 工程对应的 android/app/build.gradle 文件的 android 域中添加
 ```
 repositories {
     flatDir {
         dirs project(':yidun_quickpass-plugin-rn').file('libs')
     }
+}
+```
+
+release 包需要添加混淆规则
+
+```
+-dontwarn com.cmic.sso.sdk.**
+-keep class com.cmic.sso.**{*;}
+-dontwarn com.sdk.**
+-keep class com.sdk.** { *;}
+-keep class cn.com.chinatelecom.account.**{*;}
+-keep public class * extends android.view.View
+-keep class com.netease.nis.quicklogin.entity.**{*;}
+-keep class com.netease.nis.quicklogin.listener.**{*;}
+-keep class com.netease.nis.quicklogin.QuickLogin{
+    public <methods>;
+    public <fields>;
+}
+-keep class com.netease.nis.quicklogin.helper.UnifyUiConfig{*;}
+-keep class com.netease.nis.quicklogin.helper.UnifyUiConfig$Builder{
+     public <methods>;
+     public <fields>;
+ }
+-keep class com.netease.nis.quicklogin.utils.LoginUiHelper$CustomViewListener{
+     public <methods>;
+     public <fields>;
+}
+-keep class com.netease.nis.basesdk.**{
+    public *;
+    protected *;
 }
 ```
 
@@ -310,8 +340,8 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | backgroundImage:String                 | 设置登录页面背景，图片放在 android drawable 下，这里配置图片名字             |
 | backgroundGif:String                       | 设置登录页面背景为 Gif，Gif 资源需要放置到android drawable 目录下，传入资源名称即可 |
-| backgroundVideo:String      | 设置登录页面背景为视频，参数 videoPath 为背景 Video 文件路径:(支持本地路径如："android.resource://" + context.getPackageName() + "/" + R.raw.xxxVideo；支持网络路径如"https://xxx"(建议下载到本地后使用本地路径，网络路径由于网络环境的不可控体验不如直接加载本地视频) |
-| backgroundVideoImage:String                           | 设置视频背景时的预览图，配合 backgroundVideo 使用 |
+| backgroundVideo:String      | 设置登录页面背景为视频，视频放在android res/raw 文件夹下，这里配置视频文件名字。必须同时配置 backgroundVideo |
+| backgroundVideoImage:String                           | 设置视频背景时的预览图，图片放在 android drawable 下，这里配置图标名字，配合 backgroundVideo 使用 |
 | enterAnimation:String | 设置授权页进场动画，enterAnimation 进场动画xml无后缀文件名。放置在 android anim目录下 |
 | exitAnimation:String      | 设置授权页退出动画，exitAnimation 进场动画xml无后缀文件名。放置在 android anim目录下 |
 | isLandscape:boolean      | 是否横屏 |

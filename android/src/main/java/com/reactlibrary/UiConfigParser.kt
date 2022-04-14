@@ -435,7 +435,7 @@ object UiConfigParser {
             builder.setBackgroundImageDrawable(getDrawable(backgroundImage, context))
         }
         if (!TextUtils.isEmpty(backgroundVideo)) {
-            builder.setBackgroundVideo(backgroundVideo, backgroundVideoImage)
+            builder.setBackgroundVideo(getVideoRaw(backgroundVideo, context), backgroundVideoImage)
         }
         if (!TextUtils.isEmpty(privacyDialogText)) {
             builder.setPrivacyDialogText(privacyDialogText)
@@ -603,6 +603,20 @@ object UiConfigParser {
             e.printStackTrace()
         }
         return drawable
+    }
+
+    private fun getVideoRaw(resPath: String?, context: Context): String {
+        var videoRaw = ""
+        try {
+            Log.d(TAG, "raw path: $resPath")
+            if (!TextUtils.isEmpty(resPath)) {
+                val rid = context.resources.getIdentifier(resPath, "raw", context.packageName)
+                videoRaw = "android.resource://" + context.packageName + "/" + rid
+            }
+        } catch (e: Exception) {
+            Logger.e(e.message)
+        }
+        return videoRaw
     }
 
     fun sendEvent(params: WritableMap?) {
