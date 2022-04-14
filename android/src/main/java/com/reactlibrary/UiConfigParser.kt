@@ -189,8 +189,8 @@ object UiConfigParser {
         isPrivacyTextGravityCenter = (uiConfig["isPrivacyTextGravityCenter"] ?: false) as Boolean
         checkBoxGravity =
             ((uiConfig["checkBoxGravity"] ?: (Gravity.CENTER).toDouble()) as Double).toInt()
-        checkedImageName = (uiConfig["checkedImageName"] ?: "") as String
-        unCheckedImageName = (uiConfig["unCheckedImageName"] ?: "") as String
+        checkedImageName = (uiConfig["checkedImageName"] ?: "yd_checkbox_checked") as String
+        unCheckedImageName = (uiConfig["unCheckedImageName"] ?: "yd_checkbox_unchecked") as String
         checkBoxWith = ((uiConfig["checkBoxWith"] ?: 15.0) as Double).toInt()
         checkBoxHeight = ((uiConfig["checkBoxHeight"] ?: 15.0) as Double).toInt()
         privacyTextStart = (uiConfig["privacyTextStart"] ?: "") as String
@@ -254,7 +254,6 @@ object UiConfigParser {
             .setNavTitleBold(isNavTitleBold)
             .setNavigationTitleColor(Color.parseColor(navTitleColor))
             .setHideNavigation(isHideNav)
-            .setLogoIconDrawable(getDrawable(logoIconName, context))
             .setLogoWidth(logoWidth)
             .setLogoHeight(logoHeight)
             .setLogoTopYOffset(logoTopYOffset)
