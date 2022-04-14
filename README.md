@@ -294,8 +294,8 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 
 | 配置项                                                         | 说明                                                         |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| privacyTextColor:int                    | 设置隐私栏文本颜色，不包括协议 ，如若隐私栏协议文案为：登录即同意《中国移动认证条款》且授权 QuickLogin 登录， 则该API对除协议‘《中国移动认证条款》’区域外的其余文本生效 |
-| privacyProtocolColor:int            | 设置隐私栏协议颜色 。例如：登录即同意《中国移动认证条款》且授权 QuickLogin 登录 ， 则该 API 仅对‘《中国移动认证条款》’文案生效 |
+| privacyTextColor:String                    | 设置隐私栏文本颜色，不包括协议 ，如若隐私栏协议文案为：登录即同意《中国移动认证条款》且授权 QuickLogin 登录， 则该API对除协议‘《中国移动认证条款》’区域外的其余文本生效 |
+| privacyProtocolColor:String            | 设置隐私栏协议颜色 。例如：登录即同意《中国移动认证条款》且授权 QuickLogin 登录 ， 则该 API 仅对‘《中国移动认证条款》’文案生效 |
 | privacySize:int                              | 设置隐私栏区域字体大小，单位 px                               |
 | privacyDpSize:int                          | 设置隐私栏区域字体大小，单位 dp                               |
 | privacyTopYOffset:int                  | 设置隐私栏顶部Y轴偏移，单位 dp                                |
@@ -305,7 +305,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | privacyMarginRight:int               | 设置隐私栏右侧边距，单位 dp                                   |
 | privacyState:boolean                        | 设置隐私栏协议复选框勾选状态，true 勾选，false 不勾选          |
 | isHidePrivacyCheckBox:boolean          | 设置是否隐藏隐私栏勾选框                                     |
-| isPrivacyTextGravityCenter:boolean                     | 设置隐私栏勾选框与文本协议对齐方式，可选择顶部（Gravity.TOP），居中（Gravity.CENTER），底部（Gravity.BOTTOM）等 |
+| isPrivacyTextGravityCenter:boolean                     | 设置隐私栏文案换行后是否居中对齐，如果为true则居中对齐，否则左对齐 |
 | checkBoxGravity:int                     | 设置隐私栏勾选框与文本协议对齐方式，可选择顶部（48），居中（17），底部（80）等 |
 | checkBoxWith:int                     | 设置隐私栏复选框宽度，单位 dp|
 | checkBoxHeight:int                     | 设置隐私栏复选框高度，单位 dp |
