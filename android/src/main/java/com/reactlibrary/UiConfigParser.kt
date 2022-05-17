@@ -590,6 +590,11 @@ object UiConfigParser {
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    private fun px2dip(context: Context, pxValue: Int): Float {
+        val scale = context.resources.displayMetrics.density
+        return pxValue / scale + 0.5f
+    }
+
     private fun getDrawable(resPath: String?, context: Context): Drawable? {
         var drawable: Drawable? = null
         var rid = 0
