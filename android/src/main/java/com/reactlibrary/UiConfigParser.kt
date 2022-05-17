@@ -216,7 +216,7 @@ object UiConfigParser {
         backgroundVideoImage = (uiConfig["backgroundVideoImage"] ?: "") as String
         isLandscape = (uiConfig["isLandscape"] ?: false) as Boolean
         isDialogMode = (uiConfig["isDialogMode"] ?: false) as Boolean
-        dialogWidth = ((uiConfig["dialogWidth"] ?: 0.0) as Double).toInt()
+        dialogWidth = ((uiConfig["dialogWidth"] ?: getScreenWidth().toDouble()) as Double).toInt()
         dialogHeight = ((uiConfig["dialogHeight"] ?: 0.0) as Double).toInt()
         dialogX = ((uiConfig["dialogX"] ?: 0.0) as Double).toInt()
         dialogY = ((uiConfig["dialogY"] ?: 0.0) as Double).toInt()
@@ -622,5 +622,15 @@ object UiConfigParser {
     fun sendEvent(params: WritableMap?) {
         this.context?.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
             ?.emit("uiCallback", params)
+    }
+
+    private fun getScreenWidth(): Int {
+        context?.let {
+            val wm = it.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val outMetrics = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(outMetrics)
+            return (px2dip(it, outMetrics.widthPixels)).toInt()
+        }
+        return 0
     }
 }
