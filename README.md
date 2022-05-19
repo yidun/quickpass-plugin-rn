@@ -530,12 +530,13 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 若勾选框需要展示，请务必设置勾选框的选中态图片与未选中态图片
 协议未勾选时，登录按钮是否可点击可以自定义设置，弹窗提示的样式也可以自定义
 
-| 属性     | 说明    |
-| unCheckedImageName  | 例如：static/图片名.后缀|
+| 属性                                              | 说明                                                         |
+| :-------- | -------- |
+| unCheckedImageName | 例如：static/图片名.后缀|
 | checkedImageName | 例如：static/图片名.后缀|
 | checkboxWH| 设置复选框大小（只能正方形) ，默认 12|
 | privacyState| 设置复选框默认状态 默认:NO |
-| checkBoxAlignment| 设置隐私条款check框位置 <br> 0 表示相对协议顶对齐<br>1 表示相对协议中对齐 <br>2 表示相对协议下对齐 默认顶对齐|
+| checkBoxAlignment| 设置隐私条款check框位置 <br> 0 表示相对协议顶对齐<br> 1 表示相对协议中对齐 <br> 2 表示相对协议下对齐 默认顶对齐|
 | checkedSelected| 设置复选框勾选状态，YES:勾选，NO:取消勾选状态|
 | checkBoxMargin| 设置复选框距离隐私条款的边距 默认 8|
 | appPrivacyOriginLeftMargin| 设置隐私条款距离屏幕左边的距离 默认 60|
