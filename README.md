@@ -388,25 +388,47 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 ##### 基础配置
 | 属性 | 说明 |
 | :-------- | -------- |
-| currentVC | 当前VC,注意:要用一键登录这个值必传 |
-| rootViewController   | 设置应用的根控制器，用作隐私协议的弹出，如果不传，则使用默认值|
-| presentDirectionType   | 设置授权页的弹出方式<br>NTESPresentDirectionPush 表示从右边弹出 <br>NTESPresentDirectionPresent 表示从底部弹出|
+| presentDirectionType   | presentDirectionType = 1 表示从底部弹出|
 | backgroundColor   |设置授权页面背景颜色|
-| authWindowPop | 设置窗口类型<br>NTESAuthWindowPopFullScreen 表示全屏模式<br> NTESAuthWindowPopCenter 表示窗口在屏幕的中间<br> NTESAuthWindowPopBottom 表示窗口在屏幕的底部(不支持横屏)|
-| faceOrientation   |设置授权页面方向<br>UIInterfaceOrientationUnknown表示设备方向未知<br>UIInterfaceOrientationPortrait 表示设置保持直立<br>UIInterfaceOrientationPortraitUpsideDown 表示设备上下颠倒 <br>UIInterfaceOrientationLandscapeLeft 表示设备向左旋转 <br>UIInterfaceOrientationLandscapeRight 表示设备向右旋转 |
-| bgImage   |设置授权转背景图片，例如 ：model.bgImage = [UIImage imageNamed:]|  
-| contentMode   |设置背景图片显示模式|  
-| modalPresentationStyle   |设置 present 控制器的展示方式。如果弹窗模式下。modalPresentationStyle为UIModalPresentationOverFullScreen| 
+| authWindowPop | 设置窗口类型<br>0 表示全屏模式<br> 1 表示窗口在屏幕的中间<br> 2 表示窗口在屏幕的底部(不支持横屏)|
+| faceOrientation   |设置授权页面方向<br> 0 表示设备方向未知<br>1 表示设置保持直立<br>2 表示设备上下颠倒 <br>3 表示设备向左旋转 <br> 4 表示设备向右旋转 |
+| bgImage   |设置授权转背景图片，例如 ："图片名.后缀"|  
+| contentMode   |设置背景图片显示模式 0 表示 UIViewContentModeScaleToFill，1表示UIViewContentModeScaleAspectFit ，2表示UIViewContentModeScaleAspectFill|  
+
 
 ##### 转场动画
 | 属性 | 说明 |
 | :-------- | -------- |
-| modalTransitionStyle | 设置授权转场动画<br> UIModalTransitionStyleCoverVertical 表示下推<br>UIModalTransitionStyleFlipHorizontal 表示翻转<br>UIModalTransitionStyleCrossDissolve 表示淡出|
+| modalTransitionStyle | 设置授权转场动画<br> 0 表示下推<br>1 表示翻转<br>2 表示淡出|
 
 ##### 自定义控件
 | 属性 | 说明 |
 | :-------- | -------- |
-| customViewBlock | 设置授权界面自定义控件View的block<br>例如 ：model.customViewBlock = ^(UIView * _Nullable customView) {  /// customView就是授权页的 view，添加控件到 customView 即可} |
+| widgets | 设置授权界面自定义控件<br>例如 ： "widgets": [
+        {
+            "type": "UIButton", 
+            "UIButtonType": 0, 
+            "image": "static/weixin.png",
+            "title": "",    
+            "titleColor": "#000000",
+            "titleFont": 12,
+            "cornerRadius": 20,
+            "action": "handleCustomEvent1",
+            "frame": {"mainScreenLeftDistance":100,"mainScreenTopDistance":360,"width":32,"height":32},
+            "backgroundImage":"static/yidun_logo.png"
+        },
+        {
+            "type": "UIButton", 
+            "UIButtonType": 0, 
+            "image": "static/qq.png",
+            "title": "",    
+            "titleColor": "#FFFFFF",
+            "titleFont": 12,
+            "cornerRadius": 20,
+            "action": "handleCustomEvent2",
+            "frame": {"mainScreenCenterXWithLeftDistance":0,"mainScreenTopDistance":360,"width":32,"height":32},
+            "backgroundImage": "static/yidun_logo.png"
+        }]|
 
 ##### 背景设置视频
  
@@ -415,21 +437,20 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | localVideoFileName | 设置视频本地名称 例如xx.mp4* |
 | isRepeatPlay   | 设置是否重复播放视频，YES 表示重复播放，NO 表示不重复播放|
 | videoURL   | 设置网络视频的地址|
-| videoViewBlock   |设置自定义视频控件，例如：model.videoViewBlock = ^(UIView * _Nullable videoView) { // videoView 放置视频的控件,[videoView addSubview:视频]}|
 
 ##### 背景设置 Gif
 
 | 属性 | 说明 |
 | :-------- | -------- |
 | animationRepeatCount | 设置动画重复的次数 -1无限重复 |
-| animationImages   | 设置图片数组,例如：@[UIImage imageNamed:@"pic_yjdl"]|
+| animationImages   | 设置图片数组|
 | animationDuration   | 设置动画的时长|
 
 ##### 状态栏
 | 属性                                              | 说明                                                         |
 | :-------- | -------- |
-| statusBarStyle | 设置状态栏样式<br> iOS13之前 UIStatusBarStyleDefault表示文字黑色，UIStatusBarStyleLightContent表示文字白色<br> iOS13之后 UIStatusBarStyleDefault表示自动选择黑色或白色，UIStatusBarStyleDarkContent 表示文字黑色，UIStatusBarStyleLightContent 表示文字白色|
-					
+| statusBarStyle | 设置状态栏样式<br> iOS13之前 0表示文字黑色，1表示文字白色<br> iOS13之后 0表示自动选择黑色或白色，3 表示文字黑色，2 表示文字白色|
+                    
 ##### 导航栏
 
 | 属性                                              | 说明                                                         |
@@ -440,20 +461,18 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | navTextFont  | 设置导航栏标题字体大小|
 | navTextColor | 设置导航栏标题字体颜色|
 | navTextHidden| 设置导航栏标题是否隐藏，默认不隐藏|
-| navReturnImg | 设置导航返回图标，例如：[UIImage imageNamed:@"back-1"] |
+| navReturnImg | 设置导航返回图标，例如："back-1" |
 | navReturnImgLeftMargin | 设置导航返回图标距离屏幕左边的距离，默认0  |
 | navReturnImgBottomMargin | 设置导航返回图标距离屏幕底部的距离，默认0 |
 | navReturnImgWidth  | 设置导航返回图标的宽度，默认44 |
-| navReturnImgHeight| 设置导航返回图标的高度 ,  默认44 |
-| navControl | 设置导航栏右侧自定义控件 传非UIBarButtonItem对象|
-| customNavBlock | 设置导航栏上自定义控件, 可在导航栏上自由的添加自己想要的控件<br>例如： model.customNavBlock = ^(UIView * _Nullable customNavView) {/// 添加控件到customNavView上};                                      |
+| navReturnImgHeight| 设置导航返回图标的高度 ,  默认44 |                                 |
 
 ##### 应用 Logo
 
 
 | 属性                                              | 说明                                                         |
 | :-------- | -------- |
-| logoIconName | 设置logo图片, 例如 ： model.logoImg = [UIImage imageNamed:@"logo1"]|
+| logoImg | 设置logo图片, 例如 ："图片名.后缀"]|
 | logoWidth   | 设置logo图片宽度 |
 | logoHeight  | 设置logo图片高度 |
 | logoOffsetTopY  |设置logo图片沿Y轴偏移量， logoOffsetTopY为距离屏幕顶部的距离 ，默认为20|
@@ -505,10 +524,6 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | logBtnOriginLeft| 登录按钮的左边距 ，横屏默认40 ，竖屏默认260|
 | logBtnOriginRight| 设置登录按钮的左边距，横屏默认40 ，竖屏默认260|
 | logBtnHeight| 设置登录按钮的高度，默认44|
-| startPoint| 设置设置渐变颜色方向，左上点为(0,0), 右下点为(1,1)|
-| endPoint| 设置设置渐变颜色方向，左上点为(0,0), 右下点为(1,1)|
-| locations| 设置颜色变化点，取值范围 0.0~1.0 |
-| colors| 设置渐变色数组，需要转换为CGColor颜色|
 
 ##### 隐私协议
           
@@ -516,14 +531,11 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 协议未勾选时，登录按钮是否可点击可以自定义设置，弹窗提示的样式也可以自定义
 
 | 属性                                              | 说明                                                         |
-| :-------- | -------- |
-| prograssHUDBlock | 设置协议未勾选时，自定义弹窗样式|
-| loadingViewBlock   | 设置自定义Loading View, 点击登录按钮时，可自定义加载进度样式|
-| uncheckedImg  | 设置复选框未选中时图片|
-| checkedImg | 设置复选框选中时图片|
+| unCheckedImageName  | 例如：static/图片名.后缀|
+| checkedImageName | 例如：static/图片名.后缀|
 | checkboxWH| 设置复选框大小（只能正方形) ，默认 12|
 | privacyState| 设置复选框默认状态 默认:NO |
-| checkBoxAlignment| 设置隐私条款check框位置 <br> NSCheckBoxAlignmentTop 表示相对协议顶对齐<br>NSCheckBoxAlignmentCenter 表示相对协议中对齐 <br>NSCheckBoxAlignmentBottom 表示相对协议下对齐 默认顶对齐|
+| checkBoxAlignment| 设置隐私条款check框位置 <br> 0 表示相对协议顶对齐<br>1 表示相对协议中对齐 <br>2 表示相对协议下对齐 默认顶对齐|
 | checkedSelected| 设置复选框勾选状态，YES:勾选，NO:取消勾选状态|
 | checkBoxMargin| 设置复选框距离隐私条款的边距 默认 8|
 | appPrivacyOriginLeftMargin| 设置隐私条款距离屏幕左边的距离 默认 60|
@@ -559,19 +571,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | authWindowCenterOriginX| 设置居中弹窗沿X轴移动的距离。例如 ：authWindowCenterOriginX = 10 表示中间点沿X轴向右偏移10个像素|
 | popCenterCornerRadius| 设置居中弹窗模式下，弹窗的圆角，默认圆角为16|
 | popBottomCornerRadius| 设置底部弹窗模式下，弹窗的圆角，默认圆角为16，注：只可修改顶部左右二边的值|
-| isOpenSwipeGesture| 设置底部弹窗模式下，是否开启轻扫手势，向下轻扫关闭弹窗。默认关闭|
-
-
-##### 点击事件的回调
-
-| 属性                                              | 说明                                                         |
-| :-------- | -------- |
-| backActionBlock | 设置返回按钮点击事件回调，例如：model.backActionBlock = ^{NSLog(@"点击了返回按钮");}|
-| closeActionBlock | 设置弹窗模式下关闭事件的回调，例如：model.closeActionBlock = ^{NSLog(@"点击了关闭按钮")}|
-| loginActionBlock | 设置登录按钮点击事件回调，例如：model.loginActionBlock = ^{NSLog(@"点击了登录按钮")}|
-| checkActionBlock | 设置复选框点击事件回调，isChecked 等于 YES 选中复选框； isChecked 等于 NO 取消复选框。例如：model.checkActionBlock = ^(BOOL isChecked) {}|
-| privacyActionBlock | 设置协议点击事件回调<br> privacyType 等于 0 表示点击默认协议 <br> privacyType 等于 1 表示点击第1个协议 <br> privacyType 等于 2 表示点击第2个协议 <br>例如：model.privacyActionBlock = ^(int privacyType) {}|
-| pageCustomBlock | 设置协议点击事件回调，不会跳转到默认的协议页面。开发者可以在回调里，自行跳转到自定义的协议页面|  
+| isOpenSwipeGesture| 设置底部弹窗模式下，是否开启轻扫手势，向下轻扫关闭弹窗。默认关闭|    
 
 ### 6. 调起授权页面
 

@@ -166,7 +166,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       customModel.logBtnText = [dict objectForKey:@"logBtnText"];
       customModel.logBtnTextColor = [self ntes_colorWithHexString:[dict objectForKey:@"logBtnTextColor"]];
       customModel.logBtnUsableBGColor = [self ntes_colorWithHexString:[dict objectForKey:@"logBtnUsableBGColor"]];
-    customModel.closePopImg = [UIImage imageNamed:[dict objectForKey:@"closePopImg"]];
+      customModel.closePopImg = [UIImage imageNamed:[dict objectForKey:@"closePopImg"]];
       customModel.numberBackgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"numberBackgroundColor"]];
       customModel.numberHeight = [[dict objectForKey:@"numberHeight"] intValue];
       customModel.numberCornerRadius = [[dict objectForKey:@"numberCornerRadius"] intValue];
@@ -191,11 +191,20 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
           };
       }
 
-        customModel.appPrivacyText = [dict objectForKey:@"appPrivacyText"];
-        customModel.appFPrivacyText = [dict objectForKey:@"appFPrivacyText"];
-        customModel.appFPrivacyURL = [dict objectForKey:@"appFPrivacyURL"];
-        customModel.appSPrivacyText = [dict objectForKey:@"appSPrivacyText"];
-        customModel.appSPrivacyURL = [dict objectForKey:@"appSPrivacyURL"];
+      customModel.appPrivacyText = [dict objectForKey:@"appPrivacyText"];
+      customModel.appFPrivacyText = [dict objectForKey:@"appFPrivacyText"];
+      customModel.appFPrivacyURL = [dict objectForKey:@"appFPrivacyURL"];
+      customModel.appSPrivacyText = [dict objectForKey:@"appSPrivacyText"];
+      customModel.appSPrivacyURL = [dict objectForKey:@"appSPrivacyURL"];
+      customModel.appTPrivacyText = [dict objectForKey:@"appTPrivacyText"];
+      customModel.appTPrivacyURL = [dict objectForKey:@"appTPrivacyURL"];
+    
+      customModel.appFourPrivacyText = [dict objectForKey:@"appFourPrivacyText"];
+      customModel.appFourPrivacyURL = [dict objectForKey:@"appFourPrivacyURL"];
+    
+     customModel.appFourPrivacyTitleText = [dict objectForKey:@"appFourPrivacyTitleText"];
+     customModel.appTPrivacyTitleText = [dict objectForKey:@"appTPrivacyTitleText"];
+      
         customModel.appPrivacyOriginLeftMargin = [[dict objectForKey:@"appPrivacyOriginLeftMargin"] doubleValue];
         customModel.appPrivacyOriginRightMargin = [[dict objectForKey:@"appPrivacyOriginRightMargin"] doubleValue];
           customModel.appPrivacyOriginBottomMargin = [[dict objectForKey:@"appPrivacyOriginBottomMargin"] doubleValue];
