@@ -530,7 +530,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 若勾选框需要展示，请务必设置勾选框的选中态图片与未选中态图片
 协议未勾选时，登录按钮是否可点击可以自定义设置，弹窗提示的样式也可以自定义
 
-| 属性                                              | 说明                                                         |
+| 属性     | 说明    |
 | unCheckedImageName  | 例如：static/图片名.后缀|
 | checkedImageName | 例如：static/图片名.后缀|
 | checkboxWH| 设置复选框大小（只能正方形) ，默认 12|
