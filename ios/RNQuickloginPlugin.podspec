@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency "React"
-  s.dependency "NTESQuickPass","3.1.1"
+  s.dependency "NTESQuickPass","3.2.8"
 
 end
 
