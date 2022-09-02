@@ -74,7 +74,7 @@ class QuickLoginHelper(context: ReactApplicationContext) {
     }
 
     fun checkVerifyEnable(callback: Callback) {
-        val type = quickLogin?.checkNetWork(context, null)
+        val type = quickLogin?.checkNetWork(context)
         //5是未知类型
         if (type != 5 && type != 4) {
             callback.invoke(true)
