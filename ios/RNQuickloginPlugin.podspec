@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
 
   s.dependency "React"
   s.dependency "NTESQuickPass","3.3.7"
+  s.framework = "Network"
 
 end
 
