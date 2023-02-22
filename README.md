@@ -356,6 +356,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | isShowPrivacyDialog:boolean      | 是否显示协议未勾选默认弹窗 |
 | privacyDialogText:String      | 协议未勾选弹窗自定义message |
 | privacyDialogSize:float      | 协议未勾选弹窗文本字体大小 |
+| isShowLoading:boolean      | 授权页loading是否显示 |
 
 ##### 自定义view
 
