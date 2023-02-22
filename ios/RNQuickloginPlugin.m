@@ -51,6 +51,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
     NSDictionary *dict = self.option;
       NTESQuickLoginModel *customModel = [[NTESQuickLoginModel alloc] init];
       customModel.customViewBlock = ^(UIView * _Nullable customView) {
+          [customView setNeedsLayout];
           NSArray *widgets = [dict objectForKey:@"widgets"];
           for (NSInteger i = 0; i < widgets.count; i++) {
               NSDictionary *widgetsDict = widgets[i];
@@ -63,73 +64,73 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
                   int cornerRadius = [[widgetsDict objectForKey:@"cornerRadius"] intValue];
                   NSDictionary *frame = [widgetsDict objectForKey:@"frame"];
                   NSString *image = [widgetsDict objectForKey:@"image"];
-
-                  int x = 0;
-                  int y = 0;
+                  NSString *backgroundColor = [widgetsDict objectForKey:@"backgroundColor"];
+                  NSString *backgroundImage = [widgetsDict objectForKey:@"backgroundImage"];
+                  
+                  int mainScreenLeftDistance = [[frame objectForKey:@"mainScreenLeftDistance"] intValue];
+                  int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
+                  int mainScreenCenterXWithLeftDistance = [[frame objectForKey:@"mainScreenCenterXWithLeftDistance"] intValue];
+                  int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
+                  int mainScreenTopDistance = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
                   int width = [[frame objectForKey:@"width"] intValue];
                   int height = [[frame objectForKey:@"height"] intValue];
-                  if ([frame objectForKey:@"mainScreenLeftDistance"]) {
-                      x = [[frame objectForKey:@"mainScreenLeftDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenCenterXWithLeftDistance"]) {
-                      x = ([UIScreen mainScreen].bounds.size.width - width) / 2 - [[frame objectForKey:@"mainScreenCenterXWithLeftDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenRightDistance"]) {
-                      int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
-                      x = [UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width;
-                  }
 
-                  if ([frame objectForKey:@"mainScreenTopDistance"]) {
-                      y = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenBottomDistance"]) {
-                      int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
-                      y = [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance - height;
-                  }
-
-                  Class class = NSClassFromString(type);
-                  UIButton *button = (UIButton *)[[class alloc] init];
+                  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                   [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
                   [button addTarget:self action:@selector(buttonDidTipped:) forControlEvents:UIControlEventTouchUpInside];
                   button.tag = i;
-                  button.frame = CGRectMake(x, y, width, height);
                   [button setTitle:title forState:UIControlStateNormal];
                   [button setTitleColor:[self ntes_colorWithHexString:titleColor] forState:UIControlStateNormal];
                   button.titleLabel.font = [UIFont systemFontOfSize:titleFont];
                   button.layer.cornerRadius = cornerRadius;
                   button.layer.masksToBounds = YES;
+                  button.backgroundColor = [self ntes_colorWithHexString:backgroundColor];
+                  [button setBackgroundImage:[UIImage imageNamed:backgroundImage] forState:UIControlStateNormal];
                   [customView addSubview:button];
+                  if (mainScreenLeftDistance > 0 && mainScreenRightDistance > 0) {
+                      if (mainScreenTopDistance > 0) {
+                          button.frame = CGRectMake(mainScreenLeftDistance, mainScreenTopDistance, [UIScreen mainScreen].bounds.size.width - mainScreenLeftDistance - mainScreenRightDistance, height);
+                      } else {
+                          button.frame = CGRectMake(mainScreenLeftDistance, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, [UIScreen mainScreen].bounds.size.width - mainScreenLeftDistance - mainScreenLeftDistance, height);
+                      }
+                  } else if (mainScreenLeftDistance == 0 && mainScreenRightDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          button.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2 - mainScreenCenterXWithLeftDistance, mainScreenTopDistance,width, height);
+                      } else {
+                          button.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  } else if (mainScreenLeftDistance > 0 && mainScreenRightDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          button.frame = CGRectMake(mainScreenLeftDistance, mainScreenTopDistance, width, height);
+                      } else {
+                          button.frame = CGRectMake(mainScreenLeftDistance, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  } else if (mainScreenRightDistance > 0 && mainScreenLeftDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width, mainScreenTopDistance, width, height);
+                      } else {
+                          button.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  }
+                 
               } else if ([type isEqualToString:@"UILabel"]) {
                   NSDictionary *widgetsDict = widgets[i];
                   NSString *type = [widgetsDict objectForKey:@"type"];
                   NSString *text = [widgetsDict objectForKey:@"text"];
                   NSString *textColor = [widgetsDict objectForKey:@"textColor"];
+                  NSString *backgroundColor = [widgetsDict objectForKey:@"backgroundColor"];
                   int font = [[widgetsDict objectForKey:@"font"] intValue];
                   int textAlignment = [[widgetsDict objectForKey:@"textAlignment"] intValue];
+                  int cornerRadius = [[widgetsDict objectForKey:@"cornerRadius"] intValue];
                   NSDictionary *frame = [widgetsDict objectForKey:@"frame"];
 
-                  int x = 0;
-                  int y = 0;
+                  int mainScreenLeftDistance = [[frame objectForKey:@"mainScreenLeftDistance"] intValue];
+                  int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
+                  int mainScreenCenterXWithLeftDistance = [[frame objectForKey:@"mainScreenCenterXWithLeftDistance"] intValue];
+                  int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
+                  int mainScreenTopDistance = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
                   int width = [[frame objectForKey:@"width"] intValue];
                   int height = [[frame objectForKey:@"height"] intValue];
-                  if ([frame objectForKey:@"mainScreenLeftDistance"]) {
-                      x = [[frame objectForKey:@"mainScreenLeftDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenCenterXWithLeftDistance"]) {
-                      x = ([UIScreen mainScreen].bounds.size.width - width) / 2 - [[frame objectForKey:@"mainScreenCenterXWithLeftDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenRightDistance"]) {
-                      int mainScreenRightDistance = [[frame objectForKey:@"mainScreenRightDistance"] intValue];
-                      x = [UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width;
-                  }
-
-                  if ([frame objectForKey:@"mainScreenTopDistance"]) {
-                      y = [[frame objectForKey:@"mainScreenTopDistance"] intValue];
-                  }
-                  if ([frame objectForKey:@"mainScreenBottomDistance"]) {
-                      int mainScreenBottomDistance = [[frame objectForKey:@"mainScreenBottomDistance"] intValue];
-                      y = [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance - height;
-                  }
 
                   Class class = NSClassFromString(type);
                   UILabel *label = (UILabel *)[[class alloc] init];
@@ -138,12 +139,39 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
                   [label addGestureRecognizer:tap];
                   label.userInteractionEnabled = YES;
                   label.text = text;
+                  label.layer.cornerRadius = cornerRadius;
+                  label.layer.masksToBounds = YES;
                   label.textColor = [self ntes_colorWithHexString:textColor];
                   label.font = [UIFont systemFontOfSize:font];
                   label.textAlignment = textAlignment;
-                  label.frame = CGRectMake(x, y, width, height);
-
+                  label.backgroundColor = [self ntes_colorWithHexString:backgroundColor];
                   [customView addSubview:label];
+                  CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+                  if (mainScreenLeftDistance > 0 && mainScreenRightDistance > 0) {
+                      if (mainScreenTopDistance > 0) {
+                          label.frame = CGRectMake(mainScreenLeftDistance, mainScreenTopDistance, [UIScreen mainScreen].bounds.size.width - mainScreenLeftDistance - mainScreenRightDistance, height);
+                      } else {
+                          label.frame = CGRectMake(mainScreenLeftDistance, screenHeight - mainScreenBottomDistance -height, [UIScreen mainScreen].bounds.size.width - mainScreenLeftDistance - mainScreenLeftDistance, height);
+                      }
+                  } else if (mainScreenLeftDistance == 0 && mainScreenRightDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          label.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2 - mainScreenCenterXWithLeftDistance, mainScreenTopDistance,width, height);
+                      } else {
+                          label.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - width)/2, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  } else if (mainScreenLeftDistance > 0 && mainScreenRightDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          label.frame = CGRectMake(mainScreenLeftDistance, mainScreenTopDistance, width, height);
+                      } else {
+                          label.frame = CGRectMake(mainScreenLeftDistance, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  } else if (mainScreenRightDistance > 0 && mainScreenLeftDistance == 0) {
+                      if (mainScreenTopDistance > 0) {
+                          label.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width, mainScreenTopDistance, width, height);
+                      } else {
+                          label.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - mainScreenRightDistance - width, [UIScreen mainScreen].bounds.size.height - mainScreenBottomDistance -height, width, height);
+                      }
+                  }
               }
           }
       };
@@ -173,7 +201,6 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       customModel.numberLeftContent = [dict objectForKey:@"numberLeftContent"];
       customModel.numberRightContent = [dict objectForKey:@"numberRightContent"];
       customModel.faceOrientation = [[dict objectForKey:@"faceOrientation"] intValue];
-      customModel.loginDidDisapperfaceOrientation = [[dict objectForKey:@"loginDidDisapperfaceOrientation"] intValue];
       customModel.logoHeight = [[dict objectForKey:@"logoHeight"] intValue];
       customModel.logoHidden = [[dict objectForKey:@"logoHidden"] boolValue];
       customModel.modalTransitionStyle = [[dict objectForKey:@"modalTransitionStyle"] intValue];
@@ -224,10 +251,8 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
         customModel.checkBoxMargin = [[dict objectForKey:@"checkBoxMargin"] intValue];
         customModel.checkboxWH = [[dict objectForKey:@"checkboxWH"] intValue];
         customModel.checkedHidden = [[dict objectForKey:@"checkedHidden"] boolValue];
-        customModel.checkedImg = [UIImage imageNamed:@"checkedImageName"];
-  //      customModel.checkedImg  = [UIImage imageWithName:@"checkedImageName" class:[self class]];
-        customModel.uncheckedImg = [UIImage imageNamed:@"unCheckedImageName"];
-  //      customModel.uncheckedImg =  [UIImage imageWithName:@"unCheckedImageName" class:[self class]];
+        customModel.checkedImg = [UIImage imageNamed:[dict objectForKey:@"checkedImageName"]];
+        customModel.uncheckedImg = [UIImage imageNamed:[dict objectForKey:@"unCheckedImageName"]];
         customModel.logBtnOriginRight = [[dict objectForKey:@"logBtnOriginRight"] intValue];
         customModel.logBtnOriginLeft = [[dict objectForKey:@"logBtnOriginLeft"] intValue];
 
@@ -243,17 +268,17 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
         customModel.privacyColor = [self ntes_colorWithHexString:[dict objectForKey:@"privacyColor"]];
         customModel.protocolColor = [self ntes_colorWithHexString:[dict objectForKey:@"protocolColor"]];
 
-        customModel.privacyNavReturnImg = [UIImage imageNamed:@"privacyNavReturnImg"];
+        customModel.privacyNavReturnImg = [UIImage imageNamed:[dict objectForKey:@"privacyNavReturnImg"]];
         customModel.navReturnImgHeight = [[dict objectForKey:@"navReturnImgHeight"] intValue];
         customModel.navReturnImgLeftMargin = [[dict objectForKey:@"navReturnImgLeftMargin"] intValue];
         customModel.navReturnImgWidth = [[dict objectForKey:@"navReturnImgWidth"] intValue];
         customModel.videoURL = [dict objectForKey:@"videoURL"];
         customModel.navReturnImgBottomMargin = [[dict objectForKey:@"navReturnImgBottomMargin"] intValue];
         customModel.modalTransitionStyle = [[dict objectForKey:@"modalTransitionStyle"] intValue];
-        customModel.navReturnImg = [UIImage imageNamed:@"navReturnImg"];
-        customModel.logBtnHighlightedImg = [UIImage imageNamed:@"logBtnHighlightedImg"];
+        customModel.navReturnImg = [UIImage imageNamed:[dict objectForKey:@"navReturnImg"]];
+        customModel.logBtnHighlightedImg = [UIImage imageNamed:[dict objectForKey:@"logBtnHighlightedImg"]];
         customModel.navBarHidden = [[dict objectForKey:@"navBarHidden"] boolValue];
-        customModel.logBtnEnableImg = [UIImage imageNamed:@"logBtnEnableImg"];
+        customModel.logBtnEnableImg = [UIImage imageNamed:[dict objectForKey:@"logBtnEnableImg"]];
         int shouldHiddenPrivacyMarks = [[dict objectForKey:@"shouldHiddenPrivacyMarks"] intValue];
         if (shouldHiddenPrivacyMarks) {
             customModel.shouldHiddenPrivacyMarks = YES;
@@ -330,7 +355,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       int popBottomCornerRadius = [[dict objectForKey:@"popBottomCornerRadius"] intValue];
       customModel.popBottomCornerRadius = popBottomCornerRadius;
       customModel.popCenterCornerRadius = popCenterCornerRadius;
-      customModel.presentDirectionType = [[dict objectForKey:@"presentDirectionType"] intValue];
+      customModel.presentDirectionType = NTESPresentDirectionPresent;
 
       customModel.popBackgroundColor = [[self ntes_colorWithHexString:[dict objectForKey:@"popBackgroundColor"]] colorWithAlphaComponent:[[dict objectForKey:@"alpha"] doubleValue]];
       UIViewController *rootController = [UIApplication sharedApplication].delegate.window.rootViewController;
@@ -338,11 +363,12 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       customModel.rootViewController = rootController;
       [[NTESQuickLoginManager sharedInstance] setupModel:customModel];
 
-      customModel.backActionBlock = ^{
+      customModel.backActionBlock = ^(int backType) {
           NSMutableDictionary *dict = [NSMutableDictionary dictionary];
           [dict setValue:@"leftBackButton" forKey:@"clickViewType"];
-        [self sendEvent:dict];
+          [self sendEvent:dict];
       };
+      
       customModel.closeActionBlock = ^{
           NSMutableDictionary *dict = [NSMutableDictionary dictionary];
           [dict setValue:@"closeAction" forKey:@"action"];
@@ -550,20 +576,6 @@ static inline NSUInteger ntes_hexStrToInt(NSString *str) {
     uint32_t result = 0;
     sscanf([str UTF8String], "%X", &result);
     return result;
-}
-
-- (UIImage * _Nullable)imageWithName:(NSString * _Nonnull)imageName class:(Class)cla {
-
-    if (!imageName) {
-        return nil;
-    }
-    NSBundle *myBundle = [NSBundle bundleForClass:cla];
-    NSString *bundlePath = [myBundle pathForResource:@"NTESResource" ofType:@"bundle"];
-    NSBundle *imageBundle = [NSBundle bundleWithPath:bundlePath];
-
-    UIImage *image = [UIImage imageNamed:imageName inBundle:imageBundle compatibleWithTraitCollection:nil];
-
-    return image;
 }
 
 @end
