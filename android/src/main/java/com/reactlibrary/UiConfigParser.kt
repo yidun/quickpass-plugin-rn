@@ -128,6 +128,7 @@ object UiConfigParser {
     private var widgets: List<HashMap<String, Any>>? = null
     private var enterAnimation: String? = null
     private var exitAnimation: String? = null
+    private var isShowLoading = true
 
     @Suppress("UNCHECKED_CAST")
     private fun parser(uiConfig: Map<String, Any>) {
@@ -233,6 +234,7 @@ object UiConfigParser {
         }
         enterAnimation = (uiConfig["enterAnimation"] ?: "") as String
         exitAnimation = (uiConfig["exitAnimation"] ?: "") as String
+        isShowLoading = (uiConfig["isShowLoading"] ?: true) as Boolean
         Log.d(TAG, "ui config parser finished")
     }
 
@@ -326,6 +328,7 @@ object UiConfigParser {
             .setProtocolDialogMode(isProtocolDialogMode)
             .setPrivacyDialogAuto(isPrivacyDialogAuto)
             .setPrivacyDialogTextSize(privacyDialogSize)
+            .setLoadingVisible(isShowLoading)
             .setLoginListener(object : LoginListener() {
                 override fun onDisagreePrivacy(privacyTv: TextView?, btnLogin: Button?): Boolean {
                     return !isShowPrivacyDialog
