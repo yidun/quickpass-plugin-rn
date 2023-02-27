@@ -11,10 +11,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeMap
@@ -120,6 +117,7 @@ object UiConfigParser {
     private var isProtocolDialogMode = false
     private var isPrivacyDialogAuto = false
     private var isShowPrivacyDialog = true
+    private var privacyToastStr = ""
     private var privacyDialogText = ""
     private var privacyDialogSize = 15.0f
 
@@ -227,6 +225,7 @@ object UiConfigParser {
         isProtocolDialogMode = (uiConfig["isProtocolDialogMode"] ?: false) as Boolean
         isPrivacyDialogAuto = (uiConfig["isPrivacyDialogAuto"] ?: false) as Boolean
         isShowPrivacyDialog = (uiConfig["isShowPrivacyDialog"] ?: true) as Boolean
+        privacyToastStr = (uiConfig["privacyToastStr"] ?: "") as String
         privacyDialogText = (uiConfig["privacyDialogText"] ?: "") as String
         privacyDialogSize = ((uiConfig["privacyDialogSize"] ?: 15.0) as Double).toFloat()
         widgets = uiConfig["widgets"]?.let {
@@ -331,6 +330,10 @@ object UiConfigParser {
             .setLoadingVisible(isShowLoading)
             .setLoginListener(object : LoginListener() {
                 override fun onDisagreePrivacy(privacyTv: TextView?, btnLogin: Button?): Boolean {
+                    if (!TextUtils.isEmpty(privacyToastStr)) {
+                        Toast.makeText(btnLogin?.context, privacyToastStr, Toast.LENGTH_SHORT)
+                            .show()
+                    }
                     return !isShowPrivacyDialog
                 }
             })

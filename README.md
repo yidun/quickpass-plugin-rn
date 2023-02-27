@@ -354,6 +354,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | isProtocolDialogMode:boolean      | 协议详情页是否开启弹窗模式 |
 | isPrivacyDialogAuto:boolean      | 协议未勾选弹窗点击是否自动登录 |
 | isShowPrivacyDialog:boolean      | 是否显示协议未勾选默认弹窗 |
+| privacyToastStr:String      | 协议未勾选点击登录按钮toast内容（配合isShowPrivacyDialog使用） |
 | privacyDialogText:String      | 协议未勾选弹窗自定义message |
 | privacyDialogSize:float      | 协议未勾选弹窗文本字体大小 |
 | isShowLoading:boolean      | 授权页loading是否显示 |
@@ -377,7 +378,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 |  ∟ clickable:boolean| 控件是否可点击，单位 sp |
 |  ∟ backgroundColor:String| 控件背景颜色，十六进制颜色码 |
 |  ∟ backgroundImgPath:String| 控件背景图片，图片放在 android drawable 下，这里配置图片名字  |
-|  ∟ positionType:int| 添加控件的位置类型，1表示位于导航栏下方的body部分 |
+|  ∟ positionType:int| 添加控件的位置类型，0表示位于导航栏下方的body部分（默认）1表示位于导航栏 |
 
 #### config 可配置项说明： iOS版
 设计规范概览
