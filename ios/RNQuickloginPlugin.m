@@ -175,6 +175,13 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
               }
           }
       };
+      
+      BOOL isShowLoading = [[dict objectForKey:@"isShowLoading"] boolValue];
+      if (isShowLoading) {
+          customModel.prograssHUDBlock = ^(UIView * _Nullable prograssHUDBlock) {
+              
+          };
+      }
 
       customModel.backgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"backgroundColor"]];
       customModel.bgImage = [UIImage imageNamed:[dict objectForKey:@"bgImage"]];

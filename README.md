@@ -529,7 +529,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 
 | 属性                                              | 说明                                                         |
 | :-------- | -------- |
-| logoImg | 设置logo图片, 例如 ："图片名"]|
+| logoIconName | 设置logo图片, 例如 ："图片名"]|
 | logoWidth   | 设置logo图片宽度 |
 | logoHeight  | 设置logo图片高度 |
 | logoOffsetTopY  |设置logo图片沿Y轴偏移量， logoOffsetTopY为距离屏幕顶部的距离 ，默认为20|
@@ -634,6 +634,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | popCenterCornerRadius| 设置居中弹窗模式下，弹窗的圆角，默认圆角为16|
 | popBottomCornerRadius| 设置底部弹窗模式下，弹窗的圆角，默认圆角为16，注：只可修改顶部左右二边的值|
 | isOpenSwipeGesture| 设置底部弹窗模式下，是否开启轻扫手势，向下轻扫关闭弹窗。默认关闭|    
+| isShowLoading:boolean      | 授权页loading是否显示 |
 
 ### 6. 调起授权页面
 
