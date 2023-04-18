@@ -32,6 +32,7 @@ object UiConfigParser {
     private var navBackIconWidth = 25
     private var navBackIconHeight = 25
     private var navBackIconGravity = 0
+    private var navBackIconMargin = 0
     private var isHideBackIcon = false
     private var navHeight = 0
     private var navBackgroundColor: String? = null
@@ -102,6 +103,7 @@ object UiConfigParser {
     private var protocolNavTitleDpSize = 0
     private var protocolNavBackIconWidth = 25
     private var protocolNavBackIconHeight = 25
+    private var protocolNavBackIconMargin = 0
     private var protocolNavColor: String? = null
     private var backgroundImage: String? = null
     private var backgroundGif: String? = null
@@ -138,6 +140,7 @@ object UiConfigParser {
         navBackIconHeight = ((uiConfig["navBackIconHeight"] ?: 25.0) as Double).toInt()
         navBackIconGravity =
             ((uiConfig["navBackIconGravity"] ?: (Gravity.LEFT).toDouble()) as Double).toInt()
+        navBackIconMargin = ((uiConfig["navBackIconMargin"] ?: 10.0) as Double).toInt()
         isHideBackIcon = (uiConfig["isHideBackIcon"] ?: false) as Boolean
         navHeight = uiConfig["navHeight"]?.let { (it as Double).toInt() } ?: 50
         navBackgroundColor = (uiConfig["navBackgroundColor"] ?: "#FFFFFF") as String
@@ -210,6 +213,8 @@ object UiConfigParser {
         protocolNavBackIconWidth = ((uiConfig["protocolNavBackIconWidth"] ?: 0.0) as Double).toInt()
         protocolNavBackIconHeight =
             ((uiConfig["protocolNavBackIconHeight"] ?: 0.0) as Double).toInt()
+        protocolNavBackIconMargin =
+            ((uiConfig["protocolNavBackIconMargin"] ?: 10.0) as Double).toInt()
         protocolNavColor = (uiConfig["protocolNavColor"] ?: "#000000") as String
         backgroundImage = (uiConfig["backgroundImage"] ?: "") as String
         backgroundGif = (uiConfig["backgroundGif"] ?: "") as String
@@ -249,6 +254,7 @@ object UiConfigParser {
             .setNavigationIconGravity(navBackIconGravity)
             .setNavigationBackIconWidth(navBackIconWidth)
             .setNavigationBackIconHeight(navBackIconHeight)
+            .setNavigationIconMargin(navBackIconMargin)
             .setHideNavigationBackIcon(isHideBackIcon)
             .setNavigationHeight(navHeight)
             .setNavigationBackgroundColor(Color.parseColor(navBackgroundColor))
@@ -315,6 +321,7 @@ object UiConfigParser {
             .setProtocolPageNavTitleDpSize(protocolNavTitleDpSize)
             .setProtocolPageNavBackIconWidth(protocolNavBackIconWidth)
             .setProtocolPageNavBackIconHeight(protocolNavBackIconHeight)
+            .setProtocolPageNavBackIconMargin(protocolNavBackIconMargin)
             .setLandscape(isLandscape)
             .setDialogMode(
                 isDialogMode,
@@ -638,12 +645,13 @@ object UiConfigParser {
     }
 
     private fun getScreenWidth(): Int {
+        var width = 0
         context?.let {
             val wm = it.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val outMetrics = DisplayMetrics()
             wm.defaultDisplay.getMetrics(outMetrics)
-            return (px2dip(it, outMetrics.widthPixels)).toInt()
+            width =  (px2dip(it, outMetrics.widthPixels)).toInt()
         }
-        return 0
+        return width
     }
 }

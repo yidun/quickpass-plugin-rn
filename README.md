@@ -232,6 +232,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | navBackIconWidth:int     | 设置导航栏返回图标的宽度，单位 dp                                     |
 | navBackIconHeight:int  | 设置导航栏返回图标的高度，单位 dp                                     |
 | navBackIconGravity:int  | 设置导航栏返回图标位置，居左 3，居右 5，默认居左                                    |
+| navBackIconMargin:int     | 设置导航栏返回距离左边的距离，单位 dp                            |
 | isHideBackIcon:boolean | 设置是否隐藏导航栏返回按钮                                       |
 | navBackgroundColor:String | 设置导航栏背景颜色，十六进制RGB值，如 "#ff0000"                                          |
 | navHeight:int                | 设置导航栏高度，单位 dp                                       |
@@ -333,6 +334,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | protocolNavTitleDpSize:int    | 设置协议 Web 页面导航栏标题大小，单位 dp                        |
 | protocolNavBackIconWidth:int | 设置协议 Web 页面导航栏返回按钮宽度，单位 dp                    |
 | protocolNavBackIconHeight:int | 设置协议 Web 页面导航栏返回按钮高度，单位 dp                    |
+| protocolNavBackIconMargin:int | 设置协议 Web 页面导航栏返回按钮距离左边的距离，单位 dp                     |
 
 ##### 其他
 

@@ -21,7 +21,8 @@ class QuickLoginHelper(context: ReactApplicationContext) {
             Logger.e("业务id不允许为空")
             return
         }
-        quickLogin = QuickLogin.getInstance(context, businessId)
+        quickLogin = QuickLogin.getInstance()
+        quickLogin?.init(context, businessId)
     }
 
     fun setUiConfig(uiConfig: Map<String, Any>, callback: Callback) {
