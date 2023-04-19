@@ -183,6 +183,7 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
           };
       }
 
+      customModel.progressColor = [self ntes_colorWithHexString:[dict objectForKey:@"progressColor"]];
       customModel.backgroundColor = [self ntes_colorWithHexString:[dict objectForKey:@"backgroundColor"]];
       customModel.bgImage = [UIImage imageNamed:[dict objectForKey:@"bgImage"]];
       customModel.navTextFont = [UIFont systemFontOfSize:[[dict objectForKey:@"navTextFont"] intValue]];
