@@ -129,6 +129,7 @@ object UiConfigParser {
     private var enterAnimation: String? = null
     private var exitAnimation: String? = null
     private var isShowLoading = true
+    private var backPressedAvailable = true
 
     @Suppress("UNCHECKED_CAST")
     private fun parser(uiConfig: Map<String, Any>) {
@@ -239,6 +240,7 @@ object UiConfigParser {
         enterAnimation = (uiConfig["enterAnimation"] ?: "") as String
         exitAnimation = (uiConfig["exitAnimation"] ?: "") as String
         isShowLoading = (uiConfig["isShowLoading"] ?: true) as Boolean
+        backPressedAvailable = (uiConfig["backPressedAvailable"] ?: true) as Boolean
         Log.d(TAG, "ui config parser finished")
     }
 
@@ -335,6 +337,7 @@ object UiConfigParser {
             .setPrivacyDialogAuto(isPrivacyDialogAuto)
             .setPrivacyDialogTextSize(privacyDialogSize)
             .setLoadingVisible(isShowLoading)
+            .setBackPressedAvailable(backPressedAvailable)
             .setLoginListener(object : LoginListener() {
                 override fun onDisagreePrivacy(privacyTv: TextView?, btnLogin: Button?): Boolean {
                     if (!TextUtils.isEmpty(privacyToastStr)) {

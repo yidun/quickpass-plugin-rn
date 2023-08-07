@@ -360,6 +360,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | privacyDialogText:String      | 协议未勾选弹窗自定义message |
 | privacyDialogSize:float      | 协议未勾选弹窗文本字体大小 |
 | isShowLoading:boolean      | 授权页loading是否显示 |
+| backPressedAvailable:boolean      | 设置物理返回键是否可用 |
 
 ##### 自定义view
 
