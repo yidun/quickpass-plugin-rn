@@ -25,6 +25,8 @@ RCT_EXPORT_METHOD(initQuickLogin:(NSString *)businessID)
 RCT_EXPORT_METHOD(prefetchNumber:(RCTResponseSenderBlock)callback)
 {
   dispatch_async(dispatch_get_main_queue(), ^{
+      
+      [[NTESQuickLoginManager sharedInstance] getSDKVersion];
 
      [[NTESQuickLoginManager sharedInstance] getPhoneNumberCompletion:^(NSDictionary * _Nonnull resultDic) {
           NSNumber *boolNum = [resultDic objectForKey:@"success"];
@@ -213,6 +215,10 @@ RCT_EXPORT_METHOD(setUiConfig:(NSDictionary *)option callback:(RCTResponseSender
       customModel.logoHidden = [[dict objectForKey:@"logoHidden"] boolValue];
       customModel.modalTransitionStyle = [[dict objectForKey:@"modalTransitionStyle"] intValue];
       customModel.privacyFont = [UIFont systemFontOfSize:[[dict objectForKey:@"privacyFont"] intValue]];
+      
+      customModel.hidesBottomBarWhenPushed = [[dict objectForKey:@"hidesBottomBarWhenPushed"] boolValue];
+      customModel.openBackTapGestureRecognizer = [[dict objectForKey:@"openBackTapGestureRecognizer"] boolValue];
+      
       int prograssHUDBlock = [[dict objectForKey:@"prograssHUDBlock"] intValue];
       if (prograssHUDBlock) {
           customModel.prograssHUDBlock = ^(UIView * _Nullable prograssHUDBlock) {
