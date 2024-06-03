@@ -239,6 +239,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | navTitle:String                  | 设置导航栏标题                                               |
 | navTitleColor:String          | 设置导航栏标题颜色，十六进制RGB值，如 "#ff0000"值                                           |
 | navTitleSize:int                 | 设置导航栏标题大小，单位 sp                                   |
+| navTitleDpSize:int                 | 设置导航栏标题大小，单位 dp                        |
 | isNavTitleBold:boolean             | 设置导航栏标题是否为粗体                                     |
 | isHideNav:boolean       | 设置是否隐藏导航栏                                           |
 
@@ -286,6 +287,8 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | loginBtnTextColor:String           | 设置登录按钮文本颜色，十六进制RGB值，如 "#ff0000"                                 |
 | loginBtnWidth:int                    | 设置登录按钮宽度，单位 dp                             |
 | loginBtnHeight:int                  | 设置登录按钮高度，单位 dp                             |
+| loginBtnMarginLeft:int                    | 设置登录按钮左边距，单位 dp                             |
+| loginBtnMarginRight:int                  | 设置登录按钮右边距，单位 dp                             |
 | loginBtnBackgroundRes:String | 设置登录按钮背景图标，图标放在 android drawable 下，这里配置图标名字 |
 | loginBtnTopYOffset:int          | 设置登录按钮顶部Y轴偏移，单位 dp                      |
 | loginBtnBottomYOffset:int    | 设置登录按钮距离屏幕底部偏移，单位 dp                 |
@@ -296,11 +299,14 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | 配置项                                                         | 说明                                                         |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | privacyTextColor:String                    | 设置隐私栏文本颜色，不包括协议 ，如若隐私栏协议文案为：登录即同意《中国移动认证条款》且授权 QuickLogin 登录， 则该API对除协议‘《中国移动认证条款》’区域外的其余文本生效 |
+| privacyDialogTextColor:String            | 设置协议未勾选弹窗隐私栏文本颜色，不包括协议                                                    |
 | privacyProtocolColor:String            | 设置隐私栏协议颜色 。例如：登录即同意《中国移动认证条款》且授权 QuickLogin 登录 ， 则该 API 仅对‘《中国移动认证条款》’文案生效 |
+| privacyDialogProtocolColor:String            | 设置协议未勾选弹窗隐私栏协议颜色                                                          |
 | privacySize:int                              | 设置隐私栏区域字体大小，单位 px                               |
 | privacyDpSize:int                          | 设置隐私栏区域字体大小，单位 dp                               |
 | privacyTopYOffset:int                  | 设置隐私栏顶部Y轴偏移，单位 dp                                |
 | privacyBottomYOffset:int            | 设置隐私栏距离屏幕底部偏移，单位 dp                           |
+| privacyWidth:int                  | 设置隐私栏区域宽度，单位 dp                                                           |
 | privacyTextMarginLeft:int                  | 设置隐私栏复选框和文字内边距，单位 dp                             |
 | privacyMarginLeft:int                  | 设置隐私栏水平方向的偏移，单位 dp                             |
 | privacyMarginRight:int               | 设置隐私栏右侧边距，单位 dp                                   |
@@ -313,6 +319,12 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | checkedImageName:string                | 设置隐私栏复选框选中时的图片资源，图标放在 android drawable 下，这里配置图标名字 |
 | unCheckedImageName:String             | 设置隐私栏复选框未选中时的图片资源，图标放在 android drawable 下，这里配置图标名字 |
 | privacyTextStart:String                 | 设置隐私栏声明部分起始文案 。如：隐私栏声明为"登录即同意《隐私政策》和《中国移动认证条款》且授权易盾授予本机号码"，则可传入"登录即同意" |
+| privacyTextStartSize:int                    | 隐私栏起始文案字体大小                                                               |
+| privacyLineSpacingAdd:int                    | 隐私栏文本间距                                                                   |
+| privacyLineSpacingMul:int                    | 隐私栏文本间距倍数                                                                 |
+| protocolConnect:String                         | 设置隐私栏运营商协议和自定义协议的连接符                                                                     |
+| userProtocolConnect:String                         | 设置隐私栏自定义协议之间的连接符                                                                     |
+| operatorPrivacyAtLast:boolean                    | 运营商协议是否在末尾                                                                          |
 | isHidePrivacySmh:boolean                    | 是否隐藏运营商协议书名号                                           |
 | protocolText:String                         | 设置隐私栏协议文本                                           |
 | protocolLink:String                         | 设置隐私栏协议链接                                           |
@@ -327,6 +339,7 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | 配置项                                                         | 说明                                                         |
 | :----------------------------------------------------------- | ------------------------------------------------------------ |
 | protocolNavTitle:String             | 设置协议 Web 页面导航栏标题，如果需要根据不同运营商设置不同标题|
+| protocolNavTitleColor:String             | 设置协议 Web 页面导航栏标题颜色                                |
 | protocolNavBackIcon:String       | 设置协议 Web 页面导航栏返回图标，图标放在 android drawable 下，这里配置图标名字                                |
 | protocolNavColor:String                | 设置协议Web页面导航栏颜色                                    |
 | protocolNavHeight:int             | 设置协议 Web 页面导航栏高度                                    |
@@ -360,7 +373,8 @@ NativeModules.QuickLoginPlugin.setUiConfig(config, (success) => {
 | privacyDialogText:String      | 协议未勾选弹窗自定义message |
 | privacyDialogSize:float      | 协议未勾选弹窗文本字体大小 |
 | isShowLoading:boolean      | 授权页loading是否显示 |
-| backPressedAvailable:boolean      | 设置物理返回键是否可用 |
+| isBackPressedAvailable:boolean      | 设置物理返回键是否可用 |
+| isVirtualButtonHidden:boolean      | 是否隐藏虚拟键                                                             |
 
 ##### 自定义view
 

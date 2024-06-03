@@ -37,13 +37,14 @@ object UiConfigParser {
     private var navHeight = 0
     private var navBackgroundColor: String? = null
     private var navTitle: String? = null
-    private var navTitleSize = 0
+    private var navTitleSize = 18
+    private var navTitleDpSize = 0 // 导航栏标题大小，单位 dp
     private var isNavTitleBold = false
     private var navTitleColor: String? = null
     private var isHideNav = false
     private var logoIconName: String? = null
-    private var logoWidth = 0
-    private var logoHeight = 0
+    private var logoWidth = 50
+    private var logoHeight = 50
     private var logoTopYOffset = 0
     private var logoBottomYOffset = 0
     private var logoXOffset = 0
@@ -54,7 +55,7 @@ object UiConfigParser {
     private var maskNumberTopYOffset = 0
     private var maskNumberBottomYOffset = 0
     private var maskNumberXOffset = 0
-    private var sloganSize = 10
+    private var sloganSize = 14
     private var sloganDpSize = 0
     private var sloganColor: String? = null
     private var sloganTopYOffset = 0
@@ -66,16 +67,21 @@ object UiConfigParser {
     private var loginBtnTextColor: String? = null
     private var loginBtnWidth = 0
     private var loginBtnHeight = 0
+    private var loginBtnMarginLeft = 0 // 登录按钮左边距
+    private var loginBtnMarginRight = 0 // 登录按钮右边距
     private var loginBtnBackgroundRes: String? = null
     private var loginBtnTopYOffset = 0
     private var loginBtnBottomYOffset = 0
     private var loginBtnXOffset = 0
     private var privacyTextColor: String? = null
+    private var privacyDialogTextColor: String? = null // 协议未勾选弹窗隐私栏文本颜色，不包括协议
     private var privacyProtocolColor: String? = null
-    private var privacySize = 0
+    private var privacyDialogProtocolColor: String? = null // 协议未勾选弹窗隐私栏协议颜色
+    private var privacySize = 13
     private var privacyDpSize = 0
     private var privacyTopYOffset = 0
     private var privacyBottomYOffset = 0
+    private var privacyWidth = 0 // 隐私协议区域宽度
     private var privacyTextMarginLeft = 0
     private var privacyMarginLeft = 0
     private var privacyMarginRight = 0
@@ -86,9 +92,15 @@ object UiConfigParser {
     private var checkBoxGravity = 0
     private var checkBoxWith = 0
     private var checkBoxHeight = 0
-    private var checkedImageName = "yd_checkbox_checked"
-    private var unCheckedImageName = "yd_checkbox_unchecked"
+    private var checkedImageName: String? = null
+    private var unCheckedImageName: String? = null
     private var privacyTextStart: String? = "登录即同意"
+    private var privacyTextStartSize = 0 // 隐私协议开始文本字体大小
+    private var privacyLineSpacingAdd = 0 // 隐私文本行间距
+    private var privacyLineSpacingMul = 0 // 隐私文本行间距倍数
+    private var protocolConnect: String = "和" // 运营商协议和自定义协议的连接符
+    private var userProtocolConnect: String? = "、" // 自定义协议之间的连接符
+    private var operatorPrivacyAtLast = false // 运营商协议是否在末尾
     private var protocolText: String? = null
     private var protocolLink: String? = null
     private var protocol2Text: String? = null
@@ -97,6 +109,7 @@ object UiConfigParser {
     private var protocol3Link: String? = null
     private var privacyTextEnd: String? = "且授权使用本机号码登录"
     private var protocolNavTitle: String? = null
+    private var protocolNavTitleColor: String? = null // 协议Web页面导航栏标题颜色
     private var protocolNavBackIcon: String? = null
     private var protocolNavHeight = 0
     private var protocolNavTitleSize = 0
@@ -129,27 +142,31 @@ object UiConfigParser {
     private var enterAnimation: String? = null
     private var exitAnimation: String? = null
     private var isShowLoading = true
-    private var backPressedAvailable = true
+    private var isBackPressedAvailable = true
+    private var isVirtualButtonHidden = false // 是否隐藏虚拟键
 
     @Suppress("UNCHECKED_CAST")
     private fun parser(uiConfig: Map<String, Any>) {
         Logger.d("uiConfig--->$uiConfig")
         statusBarColor = (uiConfig["statusBarColor"] ?: "") as String
         isStatusBarDarkColor = (uiConfig["isStatusBarDarkColor"] ?: false) as Boolean
+
         navBackIcon = (uiConfig["navBackIcon"] ?: "") as String
         navBackIconWidth = ((uiConfig["navBackIconWidth"] ?: 25.0) as Double).toInt()
         navBackIconHeight = ((uiConfig["navBackIconHeight"] ?: 25.0) as Double).toInt()
         navBackIconGravity =
             ((uiConfig["navBackIconGravity"] ?: (Gravity.LEFT).toDouble()) as Double).toInt()
-        navBackIconMargin = ((uiConfig["navBackIconMargin"] ?: 10.0) as Double).toInt()
+        navBackIconMargin = ((uiConfig["navBackIconMargin"] ?: 0.0) as Double).toInt()
         isHideBackIcon = (uiConfig["isHideBackIcon"] ?: false) as Boolean
         navHeight = uiConfig["navHeight"]?.let { (it as Double).toInt() } ?: 50
         navBackgroundColor = (uiConfig["navBackgroundColor"] ?: "#FFFFFF") as String
-        navTitle = (uiConfig["navTitle"] ?: "") as String
+        navTitle = (uiConfig["navTitle"] ?: "免密登录") as String
         navTitleSize = uiConfig["navTitleSize"]?.let { (it as Double).toInt() } ?: 18
+        navTitleDpSize = uiConfig["navTitleDpSize"]?.let { (it as Double).toInt() } ?: 0
         isNavTitleBold = (uiConfig["isNavTitleBold"] ?: false) as Boolean
         navTitleColor = (uiConfig["navTitleColor"] ?: "#000000") as String
         isHideNav = (uiConfig["isHideNav"] ?: false) as Boolean
+
         logoIconName = (uiConfig["logoIconName"] ?: "") as String
         logoWidth = ((uiConfig["logoWidth"] ?: 50.0) as Double).toInt()
         logoHeight = ((uiConfig["logoHeight"] ?: 50.0) as Double).toInt()
@@ -157,34 +174,43 @@ object UiConfigParser {
         logoBottomYOffset = ((uiConfig["logoBottomYOffset"] ?: 0.0) as Double).toInt()
         logoXOffset = ((uiConfig["logoXOffset"] ?: 0.0) as Double).toInt()
         isHideLogo = (uiConfig["isHideLogo"] ?: false) as Boolean
+
         maskNumberColor = (uiConfig["maskNumberColor"] ?: "#000000") as String
         maskNumberSize = ((uiConfig["maskNumberSize"] ?: 18.0) as Double).toInt()
         maskNumberDpSize = ((uiConfig["maskNumberDpSize"] ?: 18.0) as Double).toInt()
         maskNumberTopYOffset = ((uiConfig["maskNumberTopYOffset"] ?: 0.0) as Double).toInt()
         maskNumberBottomYOffset = ((uiConfig["maskNumberBottomYOffset"] ?: 0.0) as Double).toInt()
         maskNumberXOffset = ((uiConfig["maskNumberXOffset"] ?: 0.0) as Double).toInt()
-        sloganSize = ((uiConfig["sloganSize"] ?: 10.0) as Double).toInt()
-        sloganDpSize = ((uiConfig["sloganDpSize"] ?: 10.0) as Double).toInt()
-        sloganColor = (uiConfig["sloganColor"] ?: "#000000") as String
+
+        sloganSize = ((uiConfig["sloganSize"] ?: 14.0) as Double).toInt()
+        sloganDpSize = ((uiConfig["sloganDpSize"] ?: 0.0) as Double).toInt()
+        sloganColor = (uiConfig["sloganColor"] ?: "#9A9A9A") as String
         sloganTopYOffset = ((uiConfig["sloganTopYOffset"] ?: 0.0) as Double).toInt()
         sloganBottomYOffset = ((uiConfig["sloganBottomYOffset"] ?: 0.0) as Double).toInt()
         sloganXOffset = ((uiConfig["sloganXOffset"] ?: 0.0) as Double).toInt()
+
         loginBtnText = (uiConfig["loginBtnText"] ?: "一键登录") as String
         loginBtnTextSize = ((uiConfig["loginBtnTextSize"] ?: 15.0) as Double).toInt()
-        loginBtnTextDpSize = ((uiConfig["loginBtnTextDpSize"] ?: 15.0) as Double).toInt()
+        loginBtnTextDpSize = ((uiConfig["loginBtnTextDpSize"] ?: 0.0) as Double).toInt()
         loginBtnTextColor = (uiConfig["loginBtnTextColor"] ?: "#000000") as String
+        loginBtnMarginLeft = ((uiConfig["loginBtnMarginLeft"] ?: 0.0) as Double).toInt()
+        loginBtnMarginRight = ((uiConfig["loginBtnMarginRight"] ?: 0.0) as Double).toInt()
         loginBtnWidth = ((uiConfig["loginBtnWidth"] ?: 0.0) as Double).toInt()
         loginBtnHeight = ((uiConfig["loginBtnHeight"] ?: 0.0) as Double).toInt()
         loginBtnBackgroundRes = (uiConfig["loginBtnBackgroundRes"] ?: "") as String
         loginBtnTopYOffset = ((uiConfig["loginBtnTopYOffset"] ?: 0.0) as Double).toInt()
         loginBtnBottomYOffset = ((uiConfig["loginBtnBottomYOffset"] ?: 0.0) as Double).toInt()
         loginBtnXOffset = ((uiConfig["loginBtnXOffset"] ?: 0.0) as Double).toInt()
-        privacyTextColor = (uiConfig["privacyTextColor"] ?: "#000000") as String
-        privacyProtocolColor = (uiConfig["privacyProtocolColor"] ?: "#00FF00") as String
-        privacySize = ((uiConfig["privacySize"] ?: 0.0) as Double).toInt()
+
+        privacyTextColor = (uiConfig["privacyTextColor"] ?: "#292929") as String
+        privacyDialogTextColor = (uiConfig["privacyDialogTextColor"] ?: "#292929") as String
+        privacyProtocolColor = (uiConfig["privacyProtocolColor"] ?: "#888888") as String
+        privacyDialogProtocolColor = (uiConfig["privacyDialogProtocolColor"] ?: "#888888") as String
+        privacySize = ((uiConfig["privacySize"] ?: 13.0) as Double).toInt()
         privacyDpSize = ((uiConfig["privacyDpSize"] ?: 0.0) as Double).toInt()
         privacyTopYOffset = ((uiConfig["privacyTopYOffset"] ?: 0.0) as Double).toInt()
         privacyBottomYOffset = ((uiConfig["privacyBottomYOffset"] ?: 0.0) as Double).toInt()
+        privacyWidth = ((uiConfig["privacyWidth"] ?: 0.0) as Double).toInt()
         privacyTextMarginLeft = ((uiConfig["privacyTextMarginLeft"] ?: 0.0) as Double).toInt()
         privacyMarginLeft = ((uiConfig["privacyMarginLeft"] ?: 0.0) as Double).toInt()
         privacyMarginRight = ((uiConfig["privacyMarginRight"] ?: 0.0) as Double).toInt()
@@ -199,6 +225,12 @@ object UiConfigParser {
         checkBoxWith = ((uiConfig["checkBoxWith"] ?: 15.0) as Double).toInt()
         checkBoxHeight = ((uiConfig["checkBoxHeight"] ?: 15.0) as Double).toInt()
         privacyTextStart = (uiConfig["privacyTextStart"] ?: "") as String
+        privacyTextStartSize = ((uiConfig["privacyTextStartSize"] ?: 0.0) as Double).toInt()
+        privacyLineSpacingAdd = ((uiConfig["privacyLineSpacingAdd"] ?: 0.0) as Double).toInt()
+        privacyLineSpacingMul = ((uiConfig["privacyLineSpacingMul"] ?: 0.0) as Double).toInt()
+        protocolConnect = (uiConfig["protocolConnect"] ?: "和") as String
+        userProtocolConnect = (uiConfig["userProtocolConnect"] ?: "、") as String
+        operatorPrivacyAtLast = (uiConfig["operatorPrivacyAtLast"] ?: false) as Boolean
         protocolText = (uiConfig["protocolText"] ?: "") as String
         protocolLink = (uiConfig["protocolLink"] ?: "") as String
         protocol2Text = (uiConfig["protocol2Text"] ?: "") as String
@@ -206,17 +238,21 @@ object UiConfigParser {
         protocol3Text = (uiConfig["protocol3Text"] ?: "") as String
         protocol3Link = (uiConfig["protocol3Link"] ?: "") as String
         privacyTextEnd = (uiConfig["privacyTextEnd"] ?: "") as String
+
         protocolNavTitle = (uiConfig["protocolNavTitle"] ?: "协议详情") as String
+        protocolNavTitleColor = (uiConfig["protocolNavTitleColor"] ?: "#080808") as String
         protocolNavBackIcon = (uiConfig["protocolNavBackIcon"] ?: "") as String
-        protocolNavHeight = ((uiConfig["protocolNavHeight"] ?: 0.0) as Double).toInt()
-        protocolNavTitleSize = ((uiConfig["protocolNavTitleSize"] ?: 0.0) as Double).toInt()
+        protocolNavHeight = ((uiConfig["protocolNavHeight"] ?: 50.0) as Double).toInt()
+        protocolNavTitleSize = ((uiConfig["protocolNavTitleSize"] ?: 18.0) as Double).toInt()
         protocolNavTitleDpSize = ((uiConfig["protocolNavTitleDpSize"] ?: 0.0) as Double).toInt()
-        protocolNavBackIconWidth = ((uiConfig["protocolNavBackIconWidth"] ?: 0.0) as Double).toInt()
+        protocolNavBackIconWidth =
+            ((uiConfig["protocolNavBackIconWidth"] ?: 25.0) as Double).toInt()
         protocolNavBackIconHeight =
-            ((uiConfig["protocolNavBackIconHeight"] ?: 0.0) as Double).toInt()
+            ((uiConfig["protocolNavBackIconHeight"] ?: 25.0) as Double).toInt()
         protocolNavBackIconMargin =
-            ((uiConfig["protocolNavBackIconMargin"] ?: 10.0) as Double).toInt()
-        protocolNavColor = (uiConfig["protocolNavColor"] ?: "#000000") as String
+            ((uiConfig["protocolNavBackIconMargin"] ?: 0.0) as Double).toInt()
+        protocolNavColor = (uiConfig["protocolNavColor"] ?: "#FFFFFF") as String
+
         backgroundImage = (uiConfig["backgroundImage"] ?: "") as String
         backgroundGif = (uiConfig["backgroundGif"] ?: "") as String
         backgroundVideo = (uiConfig["backgroundVideo"] ?: "") as String
@@ -240,7 +276,8 @@ object UiConfigParser {
         enterAnimation = (uiConfig["enterAnimation"] ?: "") as String
         exitAnimation = (uiConfig["exitAnimation"] ?: "") as String
         isShowLoading = (uiConfig["isShowLoading"] ?: true) as Boolean
-        backPressedAvailable = (uiConfig["backPressedAvailable"] ?: true) as Boolean
+        isBackPressedAvailable = (uiConfig["isBackPressedAvailable"] ?: true) as Boolean
+        isVirtualButtonHidden = (uiConfig["isVirtualButtonHidden"] ?: false) as Boolean
         Log.d(TAG, "ui config parser finished")
     }
 
@@ -262,40 +299,33 @@ object UiConfigParser {
             .setNavigationBackgroundColor(Color.parseColor(navBackgroundColor))
             .setNavigationTitle(navTitle)
             .setNavTitleSize(navTitleSize)
+            .setNavTitleDpSize(navTitleDpSize)
             .setNavTitleBold(isNavTitleBold)
             .setNavigationTitleColor(Color.parseColor(navTitleColor))
             .setHideNavigation(isHideNav)
             .setLogoWidth(logoWidth)
             .setLogoHeight(logoHeight)
-            .setLogoTopYOffset(logoTopYOffset)
-            .setLogoBottomYOffset(logoBottomYOffset)
             .setLogoXOffset(logoXOffset)
             .setHideLogo(isHideLogo)
             .setMaskNumberSize(maskNumberSize)
             .setMaskNumberDpSize(maskNumberDpSize)
             .setMaskNumberColor(Color.parseColor(maskNumberColor))
             .setMaskNumberXOffset(maskNumberXOffset)
-            .setMaskNumberTopYOffset(maskNumberTopYOffset)
-            .setMaskNumberBottomYOffset(maskNumberBottomYOffset)
             .setSloganSize(sloganSize)
             .setSloganDpSize(sloganDpSize)
             .setSloganColor(Color.parseColor(sloganColor))
-            .setSloganTopYOffset(sloganTopYOffset)
             .setSloganXOffset(sloganXOffset)
-            .setSloganBottomYOffset(sloganBottomYOffset)
             .setLoginBtnText(loginBtnText)
             .setLoginBtnTextColor(Color.parseColor(loginBtnTextColor))
             .setLoginBtnTextSize(loginBtnTextSize)
             .setLoginBtnTextDpSize(loginBtnTextDpSize)
-            .setLoginBtnTopYOffset(loginBtnTopYOffset)
-            .setLoginBtnBottomYOffset(loginBtnBottomYOffset)
             .setLoginBtnXOffset(loginBtnXOffset)
             .setPrivacyTextColor(Color.parseColor(privacyTextColor))
+            .setPrivacyDialogTextColor(Color.parseColor(privacyDialogTextColor))
             .setPrivacyProtocolColor(Color.parseColor(privacyProtocolColor))
+            .setPrivacyDialogProtocolColor(Color.parseColor(privacyDialogProtocolColor))
             .setPrivacySize(privacySize)
             .setPrivacyDpSize(privacyDpSize)
-            .setPrivacyTopYOffset(privacyTopYOffset)
-            .setPrivacyBottomYOffset(privacyBottomYOffset)
             .setPrivacyTextMarginLeft(privacyTextMarginLeft)
             .setPrivacyMarginLeft(privacyMarginLeft)
             .setPrivacyMarginRight(privacyMarginRight)
@@ -304,11 +334,12 @@ object UiConfigParser {
             .setHidePrivacyCheckBox(isHidePrivacyCheckBox)
             .setPrivacyTextGravityCenter(isPrivacyTextGravityCenter)
             .setCheckBoxGravity(checkBoxGravity)
-            .setCheckedImageDrawable(getDrawable(checkedImageName, context))
-            .setUnCheckedImageDrawable(getDrawable(unCheckedImageName, context))
             .setPrivacyCheckBoxWidth(checkBoxWith)
             .setPrivacyCheckBoxHeight(checkBoxHeight)
             .setPrivacyTextStart(privacyTextStart)
+            .setProtocolConnect(protocolConnect)
+            .setUserProtocolConnect(userProtocolConnect)
+            .setOperatorPrivacyAtLast(operatorPrivacyAtLast)
             .setProtocolText(protocolText)
             .setProtocolLink(protocolLink)
             .setProtocol2Text(protocol2Text)
@@ -317,6 +348,7 @@ object UiConfigParser {
             .setProtocol3Link(protocol3Link)
             .setPrivacyTextEnd(privacyTextEnd)
             .setProtocolPageNavTitle(protocolNavTitle, protocolNavTitle, protocolNavTitle)
+            .setProtocolPageNavTitleColor(Color.parseColor(protocolNavTitleColor))
             .setProtocolPageNavColor(Color.parseColor(protocolNavColor))
             .setProtocolPageNavHeight(protocolNavHeight)
             .setProtocolPageNavTitleSize(protocolNavTitleSize)
@@ -337,8 +369,9 @@ object UiConfigParser {
             .setPrivacyDialogAuto(isPrivacyDialogAuto)
             .setPrivacyDialogTextSize(privacyDialogSize)
             .setLoadingVisible(isShowLoading)
-            .setBackPressedAvailable(backPressedAvailable)
-            .setLoginListener(object : LoginListener() {
+            .setBackPressedAvailable(isBackPressedAvailable)
+            .setVirtualButtonHidden(isVirtualButtonHidden)
+            .setLoginListener(object : LoginListener {
                 override fun onDisagreePrivacy(privacyTv: TextView?, btnLogin: Button?): Boolean {
                     if (!TextUtils.isEmpty(privacyToastStr)) {
                         Toast.makeText(btnLogin?.context, privacyToastStr, Toast.LENGTH_SHORT)
@@ -437,8 +470,32 @@ object UiConfigParser {
         if (!TextUtils.isEmpty(navBackIcon)) {
             builder.setNavigationIconDrawable(getDrawable(navBackIcon, context))
         }
+        if (logoTopYOffset != 0) {
+            builder.setLogoTopYOffset(logoTopYOffset)
+        }
+        if (logoBottomYOffset != 0) {
+            builder.setLogoBottomYOffset(logoBottomYOffset)
+        }
         if (!TextUtils.isEmpty(logoIconName)) {
             builder.setLogoIconDrawable(getDrawable(logoIconName, context))
+        }
+        if (maskNumberTopYOffset != 0) {
+            builder.setMaskNumberTopYOffset(maskNumberTopYOffset)
+        }
+        if (maskNumberBottomYOffset != 0) {
+            builder.setMaskNumberBottomYOffset(maskNumberBottomYOffset)
+        }
+        if (sloganTopYOffset != 0) {
+            builder.setSloganTopYOffset(sloganTopYOffset)
+        }
+        if (sloganBottomYOffset != 0) {
+            builder.setSloganBottomYOffset(sloganBottomYOffset)
+        }
+        if (loginBtnTopYOffset != 0) {
+            builder.setLoginBtnTopYOffset(loginBtnTopYOffset)
+        }
+        if (loginBtnBottomYOffset != 0) {
+            builder.setLoginBtnBottomYOffset(loginBtnBottomYOffset)
         }
         if (loginBtnWidth != 0) {
             builder.setLoginBtnWidth(loginBtnWidth)
@@ -446,8 +503,37 @@ object UiConfigParser {
         if (loginBtnHeight != 0) {
             builder.setLoginBtnHeight(loginBtnHeight)
         }
+        if (loginBtnMarginLeft != 0) {
+            builder.setLoginBtnMarginLeft(loginBtnMarginLeft)
+        }
+        if (loginBtnMarginRight != 0) {
+            builder.setLoginBtnMarginRight(loginBtnMarginRight)
+        }
         if (!TextUtils.isEmpty(loginBtnBackgroundRes)) {
             builder.setLoginBtnBackgroundDrawable(getDrawable(loginBtnBackgroundRes, context))
+        }
+        if (privacyTopYOffset != 0) {
+            builder.setPrivacyTopYOffset(privacyTopYOffset)
+        }
+        if (privacyBottomYOffset != 0) {
+            builder.setPrivacyBottomYOffset(privacyBottomYOffset)
+        }
+        if (privacyWidth != 0) {
+            builder.setPrivacyWidth(privacyWidth)
+        }
+        if (privacyTextStartSize != 0) {
+            builder.setPrivacyTextStartSize(privacyTextStartSize.toFloat())
+        }
+        if (privacyLineSpacingAdd != 0 && privacyLineSpacingMul != 0) {
+            builder.setPrivacyLineSpacing(
+                privacyLineSpacingAdd.toFloat(), privacyLineSpacingMul.toFloat()
+            )
+        }
+        if (!TextUtils.isEmpty(checkedImageName)) {
+            builder.setCheckedImageDrawable(getDrawable(checkedImageName, context))
+        }
+        if (!TextUtils.isEmpty(unCheckedImageName)) {
+            builder.setUnCheckedImageDrawable(getDrawable(unCheckedImageName, context))
         }
         if (!TextUtils.isEmpty(backgroundImage)) {
             builder.setBackgroundImageDrawable(getDrawable(backgroundImage, context))
@@ -495,9 +581,11 @@ object UiConfigParser {
                 "Button".equals(viewParams.type, ignoreCase = true) -> {
                     viewParams.view = Button(context)
                 }
+
                 "TextView".equals(viewParams.type, ignoreCase = true) -> {
                     viewParams.view = TextView(context)
                 }
+
                 "ImageView".equals(viewParams.type, ignoreCase = true) -> {
                     viewParams.view = ImageView(context)
                 }
@@ -571,7 +659,7 @@ object UiConfigParser {
                 viewParams.view,
                 viewParams.viewId,
                 if (viewParams.positionType == 0) UnifyUiConfig.POSITION_IN_BODY else UnifyUiConfig.POSITION_IN_TITLE_BAR
-            ) { _, view ->
+            ) { _, _, view ->
                 Log.d(TAG, "CustomViewListener onClick:" + view.tag)
                 val resultMap = WritableNativeMap()
                 resultMap.putString("viewId", view.tag as String)
@@ -653,7 +741,7 @@ object UiConfigParser {
             val wm = it.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val outMetrics = DisplayMetrics()
             wm.defaultDisplay.getMetrics(outMetrics)
-            width =  (px2dip(it, outMetrics.widthPixels)).toInt()
+            width = (px2dip(it, outMetrics.widthPixels)).toInt()
         }
         return width
     }
